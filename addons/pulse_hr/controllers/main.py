@@ -445,6 +445,25 @@ class PulseApiController(http.Controller):
 
         return self._json_response(employees)
 
+    # 10a. JSON-RPC Endpoint for External/Standalone React Frontends (/web/dataset/call_kw)
+    @http.route(['/web/dataset/call_kw', '/web/dataset/call_kw/employees'], type='json', auth='public', methods=['POST'], csrf=False)
+    def web_dataset_call_kw(self, model=None, method=None, args=None, kwargs=None, **kw):
+        model = model or 'hr.employee'
+        method = method or 'search_read'
+        args = args or [[]]
+        kwargs = kwargs or {}
+
+        if model == 'hr.employee':
+            fields_to_read = kwargs.get('fields') or ['id', 'name', 'login_id', 'job_title', 'work_email', 'work_phone', 'department_id']
+            domain = args[0] if args and isinstance(args, list) else []
+            recs = request.env['hr.employee'].sudo().search_read(domain, fields=fields_to_read)
+            for r in recs:
+                if 'department_id' in r and isinstance(r['department_id'], tuple):
+                    r['department_id'] = r['department_id'][1]
+            return recs
+
+        return {'error': 'Unsupported JSON-RPC model'}
+
     # 10b. HR Employee Update API
     @http.route('/api/pulse/hr/employee/update', type='http', auth='user', methods=['POST'], csrf=False)
     def update_hr_employee(self, **kw):

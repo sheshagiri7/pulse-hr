@@ -3097,11 +3097,12 @@
           teamPerformance: '98.6% Operational SLA',
         };
 
-        // Team Members List
-        const teamMembers = [
+        // Team Members List (Synced with real Odoo hr.employee records via JSON-RPC)
+        const [teamMembers, setTeamMembers] = useState([
           {
             id: 'tm-1',
             name: 'Yokesh V. (You)',
+            login_id: 'OIHRHR20260001',
             role: 'Lead Mission Commander',
             status: 'PRESENT',
             statusLabel: 'Present / Active Duty',
@@ -3113,22 +3114,52 @@
             avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
             email: 'yokesh@pulse.internal',
             isSelf: true
-          },
-          {
-            id: 'tm-2',
-            name: 'Elena Rostova',
-            role: 'Senior Orbital Systems Engineer',
-            status: 'PRESENT',
-            statusLabel: 'Present / On Station',
-            statusColor: 'emerald',
-            checkInTime: '08:55 AM',
-            goalProgress: 95,
-            extraHours: '+24.0h',
-            absentDays: 1,
-            avatarUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&auto=format&fit=crop&q=80',
-            email: 'elena.r@pulse.internal',
-            isSelf: false
-          },
+          }
+        ]);
+
+        useEffect(() => {
+          fetch('/web/dataset/call_kw', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              jsonrpc: '2.0',
+              method: 'call',
+              params: {
+                model: 'hr.employee',
+                method: 'search_read',
+                args: [[]],
+                kwargs: {
+                  fields: ['id', 'name', 'login_id', 'job_title', 'work_email', 'work_phone', 'department_id']
+                }
+              },
+              id: Date.now()
+            })
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data && data.result && data.result.length > 0) {
+                const fetched = data.result.map((emp, index) => ({
+                  id: emp.login_id || `EMP-${emp.id}`,
+                  db_id: emp.id,
+                  name: emp.name + (emp.login_id === 'OIALEM20260002' ? ' (You)' : ''),
+                  login_id: emp.login_id || `EMP-${emp.id}`,
+                  role: emp.job_title || 'Orbital Systems Engineer',
+                  status: 'PRESENT',
+                  statusLabel: 'Present / Odoo Verified',
+                  statusColor: 'emerald',
+                  checkInTime: '08:45 AM',
+                  goalProgress: 95,
+                  extraHours: '+24.0h',
+                  absentDays: 0,
+                  avatarUrl: `https://images.unsplash.com/photo-${1534528741775 + (index * 100)}?w=200&auto=format&fit=crop&q=80`,
+                  email: emp.work_email || 'employee@pulse.ai',
+                  isSelf: index === 0
+                }));
+                setTeamMembers(fetched);
+              }
+            })
+            .catch((err) => console.error('JSON-RPC fetch error:', err));
+        }, []);
           {
             id: 'tm-3',
             name: 'Maya Patel',

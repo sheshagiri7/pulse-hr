@@ -584,5 +584,83 @@
     renderer.setSize(w, h);
   });
 })();
+
+// Dynamically fetch real Odoo employees via JSON-RPC (/web/dataset/call_kw)
+document.addEventListener('DOMContentLoaded', function() {
+  fetch('/web/dataset/call_kw', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      jsonrpc: '2.0',
+      method: 'call',
+      params: {
+        model: 'hr.employee',
+        method: 'search_read',
+        args: [[]],
+        kwargs: {
+          fields: ['id', 'name', 'login_id', 'job_title', 'work_email', 'work_phone', 'department_id']
+        }
+      },
+      id: Date.now()
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data && data.result && data.result.length > 0) {
+      const tbody = document.querySelector('tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      data.result.forEach((emp, index) => {
+        const tr = document.createElement('tr');
+        tr.className = "table-row-hover transition-colors group cursor-pointer border-l-2 border-transparent";
+        const initials = emp.name ? emp.name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase() : 'EMP';
+        const displayLoginId = emp.login_id || ('EMP-' + emp.id);
+        tr.innerHTML = `
+          <td class="p-4">
+            <div class="flex items-center gap-3">
+              <div class="relative h-10 w-10 rounded-full overflow-hidden border border-rim-light bg-surface-container-high flex items-center justify-center text-primary font-bold">
+                ${initials}
+              </div>
+              <div>
+                <div class="font-semibold text-on-surface group-hover:text-primary transition-colors">${emp.name}</div>
+                <div class="text-sm text-text-muted sm:hidden">${emp.job_title || 'Employee'}</div>
+                <div class="text-xs text-primary font-mono mt-0.5 font-bold">${displayLoginId}</div>
+              </div>
+            </div>
+          </td>
+          <td class="p-4">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-container text-on-surface border border-outline-variant/30 text-sm">
+              <span class="material-symbols-outlined text-[16px] text-primary" data-icon="terminal">terminal</span>
+              ${emp.department_id || 'Core Engineering'}
+            </span>
+          </td>
+          <td class="p-4 hidden sm:table-cell text-on-surface-variant">${emp.job_title || 'Employee'}</td>
+          <td class="p-4">
+            <div class="flex items-center gap-2">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary-fixed-dim opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary-fixed-dim"></span>
+              </span>
+              <span class="text-sm font-medium text-tertiary-fixed-dim">Active</span>
+            </div>
+          </td>
+          <td class="p-4 hidden lg:table-cell text-right">
+            <div class="flex items-center justify-end gap-2">
+              <span class="text-on-surface font-mono">98%</span>
+            </div>
+          </td>
+          <td class="p-4 hidden xl:table-cell text-right text-on-surface font-mono">₹24,50,000</td>
+          <td class="p-4 text-center">
+            <button class="text-on-surface-variant hover:text-primary p-1 rounded-md hover:bg-white/5 transition-colors">
+              <span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+  })
+  .catch(err => console.error('JSON-RPC employee directory load error:', err));
+});
 </script>
 </body></html>
