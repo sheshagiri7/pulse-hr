@@ -416,90 +416,72 @@
 <p class="font-body-lg text-body-lg text-text-muted">Real-time global workforce analytics and operational readiness.</p>
 </div>
 
-<!-- MISSION & HR ANNOUNCEMENTS BROADCAST SECTION -->
-<div class="space-y-4">
-  <div class="flex items-center justify-between">
+<!-- MISSION & HR ANNOUNCEMENTS BROADCAST CONTROL FOR HR -->
+<div class="glass-card-heavy rounded-2xl p-6 space-y-4 border border-amber-500/30">
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
     <div class="flex items-center gap-3">
-      <div class="p-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400">
-        <span class="material-symbols-outlined text-[20px]">campaign</span>
+      <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400">
+        <span class="material-symbols-outlined text-[24px]">campaign</span>
       </div>
       <div>
-        <h3 class="text-base font-bold text-white font-sans uppercase tracking-wider">Mission & HR Announcements</h3>
-        <p class="text-xs text-text-muted">Broadcast bulletins and official workforce updates</p>
+        <h3 class="text-base font-bold text-white font-sans uppercase tracking-wider flex items-center gap-2">
+          Broadcast Announcement to Employees
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950/80 text-emerald-400 border border-emerald-800 font-bold">HR Broadcast Control</span>
+        </h3>
+        <p class="text-xs text-text-muted">Create and publish official workforce bulletins directly to all Employee Dashboards</p>
       </div>
-      <span class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-surface-container border border-outline-variant/30 text-secondary">
-        3 Bulletins
-      </span>
     </div>
-    <span class="text-xs font-mono text-text-muted">Broadcast Active</span>
+    
+    <button id="toggleHrBroadcastFormBtn" class="px-4 py-2 rounded-xl bg-amber-500 text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-amber-400 transition-all flex items-center gap-2 cursor-pointer shadow-[0_0_15px_rgba(245,158,11,0.3)]">
+      <span class="material-symbols-outlined text-[18px]">add_comment</span>
+      + Create & Broadcast Bulletin
+    </button>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-    <!-- Bulletin 1 -->
-    <div class="glass-card rounded-2xl p-5 border border-primary/30 bg-surface-container-high/40 hover:border-primary/60 transition-all space-y-3 flex flex-col justify-between">
-      <div>
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-950/70 text-amber-300 border border-amber-800 uppercase tracking-wider">
-            HR Briefing
-          </span>
-          <span class="text-[10px] font-mono text-primary font-bold">📌 Pinned</span>
-        </div>
-        <h4 class="text-sm font-bold text-white font-sans leading-snug">
-          Mission All-Hands & Q3 Review
-        </h4>
-        <p class="text-xs text-text-muted mt-1.5 leading-relaxed">
-          Mandatory sync on bonus payouts & updated shift rotation tiers.
-        </p>
+  <!-- Broadcast Form -->
+  <div id="hrBroadcastFormContainer" class="hidden p-5 rounded-xl bg-surface-container-low/80 border border-outline-variant/30 space-y-4 animate-in fade-in duration-200">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div class="space-y-1">
+        <label class="text-[11px] font-mono text-text-muted">Category</label>
+        <select id="annCategory" class="w-full rounded-lg p-2.5 text-xs font-mono bg-surface-container border border-outline-variant/40 text-white outline-none">
+          <option value="HR BRIEFING">HR Briefing (General)</option>
+          <option value="PTO POLICY">PTO & Leave Policy</option>
+          <option value="RECOGNITION">Employee Recognition</option>
+          <option value="SAFETY">Safety & Operational</option>
+        </select>
       </div>
-      <div class="pt-3 border-t border-outline-variant/30 flex items-center justify-between text-[11px] font-mono text-text-muted">
-        <span>Dr. Sarah Chen</span>
-        <span class="text-primary font-semibold">Fri, Aug 28 • 16:00 UTC</span>
+      <div class="space-y-1 sm:col-span-2">
+        <label class="text-[11px] font-mono text-text-muted">Announcement Title</label>
+        <input id="annTitle" type="text" placeholder="e.g., Q3 All-Hands Meeting & Bonus Disbursement" class="w-full rounded-lg p-2.5 text-xs font-mono bg-surface-container border border-outline-variant/40 text-white outline-none placeholder:text-text-muted" />
       </div>
     </div>
 
-    <!-- Bulletin 2 -->
-    <div class="glass-card rounded-2xl p-5 border border-secondary/30 bg-surface-container-high/40 hover:border-secondary/60 transition-all space-y-3 flex flex-col justify-between">
-      <div>
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-sky-950/70 text-sky-300 border border-sky-800 uppercase tracking-wider">
-            PTO Policy
-          </span>
-          <span class="text-[10px] font-mono text-text-muted font-bold">Notice</span>
-        </div>
-        <h4 class="text-sm font-bold text-white font-sans leading-snug">
-          Quarterly Leave Blackout Notice
-        </h4>
-        <p class="text-xs text-text-muted mt-1.5 leading-relaxed">
-          Submit September transit window PTO requests 5 days in advance.
-        </p>
-      </div>
-      <div class="pt-3 border-t border-outline-variant/30 flex items-center justify-between text-[11px] font-mono text-text-muted">
-        <span>Pulse HR Operations</span>
-        <span class="text-secondary font-semibold">Sep 01 – Sep 10</span>
-      </div>
+    <div class="space-y-1">
+      <label class="text-[11px] font-mono text-text-muted">Announcement Summary / Bulletin Details</label>
+      <textarea id="annSummary" rows="2" placeholder="Type official announcement message for employees..." class="w-full rounded-lg p-2.5 text-xs font-mono bg-surface-container border border-outline-variant/40 text-white outline-none placeholder:text-text-muted resize-none"></textarea>
     </div>
 
-    <!-- Bulletin 3 -->
-    <div class="glass-card rounded-2xl p-5 border border-tertiary/30 bg-surface-container-high/40 hover:border-tertiary/60 transition-all space-y-3 flex flex-col justify-between">
-      <div>
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-950/70 text-emerald-300 border border-emerald-800 uppercase tracking-wider">
-            Recognition
-          </span>
-          <span class="text-[10px] font-mono text-tertiary font-bold">★ Active</span>
-        </div>
-        <h4 class="text-sm font-bold text-white font-sans leading-snug">
-          Bravo Squad Hits 99.8% Uptime
-        </h4>
-        <p class="text-xs text-text-muted mt-1.5 leading-relaxed">
-          Zero-incident telemetry achieved across 60 consecutive shifts.
-        </p>
-      </div>
-      <div class="pt-3 border-t border-outline-variant/30 flex items-center justify-between text-[11px] font-mono text-text-muted">
-        <span>Command HQ</span>
-        <span class="text-tertiary font-semibold">Tier Multiplier</span>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+      <label class="flex items-center gap-2 text-xs font-mono text-text-muted cursor-pointer">
+        <input id="annIsPinned" type="checkbox" class="w-4 h-4 accent-amber-500 rounded" />
+        <span>Pin to top of Employee Dashboard</span>
+      </label>
+
+      <div class="flex items-center gap-2">
+        <button id="cancelHrBroadcastBtn" type="button" class="px-4 py-2 rounded-lg bg-surface-container border border-outline-variant/30 text-xs font-mono text-text-muted hover:text-white transition-colors">
+          Cancel
+        </button>
+        <button id="submitHrBroadcastBtn" type="button" class="px-5 py-2 rounded-lg bg-emerald-500 text-black font-mono text-xs font-bold uppercase hover:bg-emerald-400 transition-all flex items-center gap-1.5 shadow-[0_0_12px_rgba(52,211,153,0.4)]">
+          <span class="material-symbols-outlined text-[16px]">send</span>
+          Broadcast to Employees
+        </button>
       </div>
     </div>
+  </div>
+
+  <!-- Live Published Bulletins Stream -->
+  <div id="hrLiveAnnouncementsList" class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+    <!-- Loaded dynamically -->
   </div>
 </div>
 <!-- Top Metrics (Bento Grid Style) -->
@@ -1167,6 +1149,87 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     })
     .catch(err => console.error('Dashboard stats fetch error:', err));
+
+  // HR Announcement Broadcast Controller JS
+  const formContainer = document.getElementById('hrBroadcastFormContainer');
+  const toggleBtn = document.getElementById('toggleHrBroadcastFormBtn');
+  const cancelBtn = document.getElementById('cancelHrBroadcastBtn');
+  const submitBtn = document.getElementById('submitHrBroadcastBtn');
+  const listContainer = document.getElementById('hrLiveAnnouncementsList');
+
+  if (toggleBtn && formContainer) {
+    toggleBtn.addEventListener('click', () => {
+      formContainer.classList.toggle('hidden');
+    });
+  }
+
+  if (cancelBtn && formContainer) {
+    cancelBtn.addEventListener('click', () => {
+      formContainer.classList.add('hidden');
+    });
+  }
+
+  function loadHrAnnouncements() {
+    if (!listContainer) return;
+    fetch('/api/pulse/announcements')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          listContainer.innerHTML = data.map(ann => `
+            <div class="glass-card rounded-2xl p-4 border border-outline-variant/30 bg-surface-container-high/40 space-y-2 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-950/70 text-amber-300 border border-amber-800 uppercase">
+                    ${ann.category || 'HR BRIEFING'}
+                  </span>
+                  ${ann.is_pinned ? '<span class="text-[10px] font-mono text-primary font-bold">📌 Pinned</span>' : '<span class="text-[10px] font-mono text-text-muted">Active</span>'}
+                </div>
+                <h4 class="text-xs font-bold text-white font-sans">${ann.title}</h4>
+                <p class="text-[11px] text-text-muted mt-1 font-mono">${ann.summary}</p>
+              </div>
+              <div class="pt-2 border-t border-outline-variant/20 flex items-center justify-between text-[10px] font-mono text-text-muted">
+                <span>${ann.author || 'HR'}</span>
+                <span class="text-primary font-semibold">${ann.date_str || 'Today'}</span>
+              </div>
+            </div>
+          `).join('');
+        }
+      })
+      .catch(err => console.error('Error fetching HR announcements:', err));
+  }
+
+  if (submitBtn) {
+    submitBtn.addEventListener('click', () => {
+      const title = document.getElementById('annTitle').value.trim();
+      const summary = document.getElementById('annSummary').value.trim();
+      const category = document.getElementById('annCategory').value;
+      const is_pinned = document.getElementById('annIsPinned').checked;
+
+      if (!title || !summary) {
+        if (window.showDayflowToast) window.showDayflowToast('Please enter both announcement title and summary.', 'error');
+        return;
+      }
+
+      fetch('/api/pulse/hr/announcement/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, summary, category, is_pinned, author: 'Dr. Sarah Chen' })
+      })
+        .then(res => res.json())
+        .then(res => {
+          if (res.status === 'BROADCASTED') {
+            if (window.showDayflowToast) window.showDayflowToast('✓ Announcement broadcasted live to all Employee Dashboards!', 'success');
+            document.getElementById('annTitle').value = '';
+            document.getElementById('annSummary').value = '';
+            formContainer.classList.add('hidden');
+            loadHrAnnouncements();
+          }
+        })
+        .catch(err => console.error('Broadcast error:', err));
+    });
+  }
+
+  loadHrAnnouncements();
 });
 </script>
 </body></html>

@@ -659,7 +659,95 @@ class PulseApiController(http.Controller):
                 {'label': "HR", 'val': 98, 'color': "#2878FF"}
             ]
 
-        return self._json_response({'responseText': reply, 'actions': actions, 'barChart': barChart})
+        return self._json_response({'reply': reply, 'actions': actions, 'barChart': barChart})
+
+    # 13. HR Announcement Management & Broadcast Endpoints
+    @http.route(['/api/announcements', '/api/pulse/announcements'], type='http', auth='user', methods=['GET'], csrf=False)
+    def get_announcements(self, **kw):
+        ann_recs = request.env['pulse.announcement'].sudo().search([('active', '=', True)], order='is_pinned desc, create_date desc', limit=10)
+        results = []
+        for a in ann_recs:
+            results.append({
+                'id': a.id,
+                'title': a.title,
+                'category': a.category or 'HR BRIEFING',
+                'summary': a.summary,
+                'author': a.author or 'Pulse HR Operations',
+                'date_str': a.date_str or 'Today',
+                'is_pinned': a.is_pinned,
+            })
+
+        if not results:
+            results = [
+                {
+                    'id': 1,
+                    'title': 'Mission All-Hands & Q3 Review',
+                    'category': 'HR BRIEFING',
+                    'summary': 'Mandatory sync on bonus payouts & updated shift rotation tiers.',
+                    'author': 'Dr. Sarah Chen',
+                    'date_str': 'Fri, Aug 28 • 16:00 UTC',
+                    'is_pinned': True,
+                },
+                {
+                    'id': 2,
+                    'title': 'Quarterly Leave Blackout Notice',
+                    'category': 'PTO POLICY',
+                    'summary': 'Submit September transit window PTO requests 5 days in advance.',
+                    'author': 'Pulse HR Operations',
+                    'date_str': 'Sep 01 – Sep 10',
+                    'is_pinned': False,
+                },
+                {
+                    'id': 3,
+                    'title': 'Bravo Squad Hits 99.8% Uptime',
+                    'category': 'RECOGNITION',
+                    'summary': 'Zero-incident telemetry achieved across 60 consecutive shifts.',
+                    'author': 'Command HQ',
+                    'date_str': 'Tier Multiplier',
+                    'is_pinned': False,
+                }
+            ]
+
+        return self._json_response(results)
+
+    @http.route('/api/pulse/hr/announcement/create', type='http', auth='user', methods=['POST'], csrf=False)
+    def create_announcement(self, **kw):
+        user = request.env.user
+        is_hr = user.has_group('hr.group_hr_user') or user.has_group('hr_attendance.group_hr_attendance_officer') or user._is_admin()
+        if not is_hr:
+            return self._json_response({'error': 'Unauthorized HR access'}, status=403)
+
+        try:
+            raw_body = request.httprequest.data
+            body = json.loads(raw_body.decode('utf-8')) if raw_body else kw
+        except Exception:
+            body = kw
+
+        title = body.get('title')
+        summary = body.get('summary') or body.get('content')
+        category = body.get('category', 'HR BRIEFING')
+        author = body.get('author', 'Pulse HR Operations')
+        date_str = body.get('date_str', fields.Date.today().strftime('%b %d, %Y'))
+        is_pinned = bool(body.get('is_pinned', False))
+
+        if not title or not summary:
+            return self._json_response({'error': 'Title and summary are required'}, status=400)
+
+        rec = request.env['pulse.announcement'].sudo().create({
+            'title': title,
+            'category': category,
+            'summary': summary,
+            'author': author,
+            'date_str': date_str,
+            'is_pinned': is_pinned,
+            'active': True,
+        })
+
+        return self._json_response({
+            'message': 'Announcement broadcasted successfully to all Employee Dashboards!',
+            'id': rec.id,
+            'status': 'BROADCASTED'
+        })
 
 
 class PulseHomeController(Home):

@@ -3620,8 +3620,21 @@
         const [isAttendanceModalOpen, setIsAttendanceModalOpen] = useState(false);
         const [isPayrollModalOpen, setIsPayrollModalOpen] = useState(false);
         const [isLeaveRequestModalOpen, setIsLeaveRequestModalOpen] = useState(false);
+        const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
         const [isAiModalOpen, setIsAiModalOpen] = useState(false);
-        const [currentStatus, setCurrentStatus] = useState('PRESENT'); // PRESENT | ABSENT | HALF DAY | LEAVE
+        const [currentStatus, setCurrentStatus] = useState('PRESENT');
+        const [announcementsList, setAnnouncementsList] = useState([]);
+
+        useEffect(() => {
+          fetch('/api/pulse/announcements')
+            .then(res => res.json())
+            .then(data => {
+              if (Array.isArray(data) && data.length > 0) {
+                setAnnouncementsList(data);
+              }
+            })
+            .catch(() => {});
+        }, []);
 
         const [profileData, setProfileData] = useState({
           name: 'Yokesh V.',
@@ -3793,71 +3806,36 @@
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        {/* Bulletin 1 */}
-                        <div className="hover-pop p-5 rounded-2xl bg-[#0f1118]/90 border border-[#1e2230] hover:border-amber-500/60 shadow-lg space-y-2.5 flex flex-col justify-between">
-                          <div>
-                            <div className="flex items-center justify-between mb-2">
-                              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-950/70 text-amber-300 border border-amber-800/80 uppercase tracking-wider">
-                                HR Briefing
-                              </span>
-                              <span className="text-[10px] font-mono text-amber-400 font-bold">📌 Pinned</span>
+                        {(announcementsList.length > 0 ? announcementsList : [
+                          { id: 1, title: 'Mission All-Hands & Q3 Review', category: 'HR BRIEFING', summary: 'Mandatory sync on bonus payouts & updated shift rotation tiers.', author: 'Dr. Sarah Chen', date_str: 'Fri, Aug 28 • 16:00 UTC', is_pinned: true },
+                          { id: 2, title: 'Quarterly Leave Blackout Notice', category: 'PTO POLICY', summary: 'Submit September transit window PTO requests 5 days in advance.', author: 'Pulse HR Operations', date_str: 'Sep 01 – Sep 10', is_pinned: false },
+                          { id: 3, title: 'Bravo Squad Hits 99.8% Uptime', category: 'RECOGNITION', summary: 'Zero-incident telemetry achieved across 60 consecutive shifts.', author: 'Command HQ', date_str: 'Tier Multiplier', is_pinned: false }
+                        ]).map((ann) => (
+                          <div key={ann.id} className="hover-pop p-5 rounded-2xl bg-[#0f1118]/90 border border-[#1e2230] hover:border-amber-500/60 shadow-lg space-y-2.5 flex flex-col justify-between">
+                            <div>
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-950/70 text-amber-300 border border-amber-800/80 uppercase tracking-wider">
+                                  {ann.category || 'HR BRIEFING'}
+                                </span>
+                                {ann.is_pinned ? (
+                                  <span className="text-[10px] font-mono text-amber-400 font-bold">📌 Pinned</span>
+                                ) : (
+                                  <span className="text-[10px] font-mono text-zinc-500">Notice</span>
+                                )}
+                              </div>
+                              <h3 className="text-sm font-bold text-white font-sans leading-snug">
+                                {ann.title}
+                              </h3>
+                              <p className="text-xs font-mono text-zinc-400 mt-1.5 leading-relaxed">
+                                {ann.summary}
+                              </p>
                             </div>
-                            <h3 className="text-sm font-bold text-white font-sans leading-snug">
-                              Mission All-Hands & Q3 Review
-                            </h3>
-                            <p className="text-xs font-mono text-zinc-400 mt-1.5 leading-relaxed">
-                              Mandatory sync on bonus payouts & updated shift rotation tiers.
-                            </p>
-                          </div>
-                          <div className="pt-3 border-t border-zinc-800/80 flex items-center justify-between text-[10px] font-mono text-zinc-500">
-                            <span>Dr. Sarah Chen</span>
-                            <span>Fri, Aug 28 • 16:00 UTC</span>
-                          </div>
-                        </div>
-
-                        {/* Bulletin 2 */}
-                        <div className="hover-pop p-5 rounded-2xl bg-[#0f1118]/90 border border-[#1e2230] hover:border-sky-500/60 shadow-lg space-y-2.5 flex flex-col justify-between">
-                          <div>
-                            <div className="flex items-center justify-between mb-2">
-                              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-sky-950/70 text-sky-300 border border-sky-800/80 uppercase tracking-wider">
-                                PTO Policy
-                              </span>
-                              <span className="text-[10px] font-mono text-zinc-500">Notice</span>
+                            <div className="pt-3 border-t border-zinc-800/80 flex items-center justify-between text-[10px] font-mono text-zinc-500">
+                              <span>{ann.author}</span>
+                              <span className="text-amber-300 font-semibold">{ann.date_str}</span>
                             </div>
-                            <h3 className="text-sm font-bold text-white font-sans leading-snug">
-                              Quarterly Leave Blackout Notice
-                            </h3>
-                            <p className="text-xs font-mono text-zinc-400 mt-1.5 leading-relaxed">
-                              Submit September transit window PTO requests 5 days in advance.
-                            </p>
                           </div>
-                          <div className="pt-3 border-t border-zinc-800/80 flex items-center justify-between text-[10px] font-mono text-zinc-500">
-                            <span>Pulse HR Operations</span>
-                            <span>Sep 01 – Sep 10</span>
-                          </div>
-                        </div>
-
-                        {/* Bulletin 3 */}
-                        <div className="hover-pop p-5 rounded-2xl bg-[#0f1118]/90 border border-[#1e2230] hover:border-emerald-500/60 shadow-lg space-y-2.5 flex flex-col justify-between">
-                          <div>
-                            <div className="flex items-center justify-between mb-2">
-                              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-950/70 text-emerald-300 border border-emerald-800/80 uppercase tracking-wider">
-                                Recognition
-                              </span>
-                              <span className="text-[10px] font-mono text-emerald-400 font-bold">★ Active</span>
-                            </div>
-                            <h3 className="text-sm font-bold text-white font-sans leading-snug">
-                              Bravo Squad Hits 99.8% Uptime
-                            </h3>
-                            <p className="text-xs font-mono text-zinc-400 mt-1.5 leading-relaxed">
-                              Zero-incident telemetry achieved across 60 consecutive shifts.
-                            </p>
-                          </div>
-                          <div className="pt-3 border-t border-zinc-800/80 flex items-center justify-between text-[10px] font-mono text-zinc-500">
-                            <span>Command HQ</span>
-                            <span className="text-emerald-400 font-semibold">Tier Multiplier</span>
-                          </div>
-                        </div>
+                        ))}
                       </div>
                     </section>
 

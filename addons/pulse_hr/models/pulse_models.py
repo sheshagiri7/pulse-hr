@@ -144,3 +144,17 @@ class HrAttendanceExtend(models.Model):
     attendance_method = fields.Char(string='Attendance Method', default='Pulse Web Portal')
     location = fields.Char(string='Location', default='Mission Control HQ')
     notes = fields.Char(string='Notes')
+
+
+class PulseAnnouncement(models.Model):
+    _name = 'pulse.announcement'
+    _description = 'HR Broadcast Announcement'
+
+    title = fields.Char(string='Title', required=True)
+    category = fields.Char(string='Category', default='HR BRIEFING')
+    summary = fields.Text(string='Summary', required=True)
+    author = fields.Char(string='Author', default='Pulse HR Operations')
+    date_str = fields.Char(string='Date Display', default='Today')
+    is_pinned = fields.Boolean(string='Is Pinned', default=False)
+    active = fields.Boolean(string='Active', default=True)
+    created_at = fields.Datetime(string='Created At', default=fields.Datetime.now)
