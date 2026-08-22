@@ -25,7 +25,13 @@ class PulseEmployeeDashboardController(http.Controller):
         try:
             with open(emp_file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
-            return request.make_response(content, headers=[('Content-Type', 'text/html; charset=utf-8')])
+            headers = [
+                ('Content-Type', 'text/html; charset=utf-8'),
+                ('Cache-Control', 'no-cache, no-store, must-revalidate'),
+                ('Pragma', 'no-cache'),
+                ('Expires', '0')
+            ]
+            return request.make_response(content, headers=headers)
         except Exception:
             return request.not_found()
 
@@ -53,7 +59,13 @@ class PulseHrDashboardController(http.Controller):
         try:
             with open(hr_file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
-            return request.make_response(content, headers=[('Content-Type', 'text/html; charset=utf-8')])
+            headers = [
+                ('Content-Type', 'text/html; charset=utf-8'),
+                ('Cache-Control', 'no-cache, no-store, must-revalidate'),
+                ('Pragma', 'no-cache'),
+                ('Expires', '0')
+            ]
+            return request.make_response(content, headers=headers)
         except Exception:
             return request.not_found()
 
