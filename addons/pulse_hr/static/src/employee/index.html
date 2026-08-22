@@ -2761,20 +2761,9 @@
       // Leave Request Modal Component (With Animated 'Already Applied' Status)
       // ==========================================
       const LeaveRequestModal = ({ isOpen, onClose, setCurrentStatus }) => {
-        const [modalTab, setModalTab] = useState('status'); // 'status' | 'form'
+        const [modalTab, setModalTab] = useState('form'); // Default to apply form
         const [hasApplied, setHasApplied] = useState(false);
-        const [appliedData, setAppliedData] = useState({
-          id: 'LV-2026-0001',
-          leaveType: 'Paid Leave',
-          startDate: '2026-08-25',
-          endDate: '2026-08-27',
-          duration: '3 Days',
-          reason: 'Family Vacation',
-          status: 'PENDING',
-          appliedOn: 'Aug 22, 2026',
-          approver: 'HR Operations Manager',
-          remainingDays: 14,
-        });
+        const [appliedData, setAppliedData] = useState(null);
 
         const [leaveType, setLeaveType] = useState('Paid Leave');
         const [startDate, setStartDate] = useState('');
@@ -2796,15 +2785,21 @@
                     startDate: latest.start_date || '2026-08-25',
                     endDate: latest.end_date || '2026-08-27',
                     duration: `${latest.days || 3} Days`,
-                    reason: latest.reason || 'Family Vacation',
+                    reason: latest.reason || 'Personal Time Off',
                     status: latest.status || 'PENDING',
                     appliedOn: 'Odoo Verified Record',
-                    approver: 'HR Operations Manager',
+                    approver: 'HR Operations Lead',
                     remainingDays: data.balances && data.balances[0] ? data.balances[0].remaining_days : 14,
                   });
+                } else {
+                  setHasApplied(false);
+                  setAppliedData(null);
                 }
               })
-              .catch((err) => console.error('Error fetching leave balances:', err));
+              .catch((err) => {
+                setHasApplied(false);
+                setAppliedData(null);
+              });
           }
         }, [isOpen]);
 
@@ -2921,7 +2916,7 @@
                 {/* VIEW 1: ANIMATED 'ALREADY APPLIED' LEAVE RESULT SCREEN        */}
                 {/* ============================================================ */}
                 {modalTab === 'status' && (
-                  hasApplied ? (
+                  (hasApplied && appliedData) ? (
                     <div className="space-y-5 animate-in fade-in zoom-in-95 duration-200">
                       
                       {/* Animated Radar Approval Badge Header */}
