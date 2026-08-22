@@ -337,8 +337,8 @@
         <div style="display: flex; align-items: center; gap: 12px; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">
           <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150" id="hrMenuAvatar" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid #3B82F6;"/>
           <div>
-            <div id="hrMenuName" style="font-weight: 700; font-size: 14px; color: #fff;">Admin Officer</div>
-            <div style="font-size: 11px; color: #3B82F6; font-weight: 600;">HR Operations Superuser</div>
+            <div id="hrMenuName" style="font-weight: 700; font-size: 14px; color: #fff;">Yokesh V.</div>
+            <div style="font-size: 11px; color: #3B82F6; font-weight: 600;">HR Operations Officer</div>
           </div>
         </div>
 

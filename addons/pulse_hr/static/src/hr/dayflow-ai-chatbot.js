@@ -28,10 +28,10 @@
             <span class="material-symbols-outlined" style="font-size: 22px;">auto_awesome</span>
           </div>
           <div>
-            <div class="dayflow-ai-title">PULSE AI</div>
+            <div class="dayflow-ai-title flex items-center gap-2">PULSE AI Copilot <span style="font-size: 10px; background: rgba(66,225,141,0.2); color: #42e18d; padding: 1px 6px; border-radius: 4px; font-family: monospace;">GPT-4o Synced</span></div>
             <div class="dayflow-ai-subtitle">
               <span class="dayflow-ai-status-dot"></span>
-              HR Intelligence Assistant
+              Personnel Context: HR Officer (Pulse) (0IHRHR20260001)
             </div>
           </div>
         </div>
@@ -52,8 +52,8 @@
       <div id="dayflowAiBody" class="dayflow-ai-body">
         <!-- Welcome Screen -->
         <div id="dayflowAiWelcome" class="dayflow-ai-welcome">
-          <div class="dayflow-ai-welcome-title">Good morning, Admin. 👋</div>
-          <div class="dayflow-ai-welcome-desc">How can I help you understand your workforce today? Select a quick topic or type your query below.</div>
+          <div class="dayflow-ai-welcome-title">Hello Yokesh! 👋</div>
+          <div class="dayflow-ai-welcome-desc">I am your PULSE Mission AI Copilot. How can I assist you with workforce analytics, attendance, payroll, or leave approvals today?</div>
           
           <div class="dayflow-ai-quick-grid">
             <button class="dayflow-ai-quick-btn" onclick="window.PulseAI.sendPrompt('Give me today\'s workforce summary.')">
@@ -86,7 +86,7 @@
       <!-- Footer Input -->
       <div class="dayflow-ai-footer">
         <div class="dayflow-ai-input-wrap">
-          <input id="dayflowAiInput" class="dayflow-ai-input" placeholder="Ask Pulse AI about workforce..." type="text" autocomplete="off"/>
+          <input id="dayflowAiInput" class="dayflow-ai-input" placeholder="Ask AI Copilot about attendance, leaves, salary, HR..." type="text" autocomplete="off"/>
         </div>
         <button id="dayflowAiSendBtn" class="dayflow-ai-send-btn" title="Send Message">
           <span class="material-symbols-outlined" style="font-size: 20px;">send</span>
@@ -126,22 +126,22 @@
     history = [];
     body.innerHTML = `
       <div id="dayflowAiWelcome" class="dayflow-ai-welcome">
-        <div class="dayflow-ai-welcome-title">Good morning, Admin. 👋</div>
-        <div class="dayflow-ai-welcome-desc">Conversation cleared. How can I assist you with your workforce data now?</div>
+        <div class="dayflow-ai-welcome-title">Hello Yokesh! 👋</div>
+        <div class="dayflow-ai-welcome-desc">I am your PULSE Mission AI Copilot. How can I assist you with workforce analytics, attendance, payroll, or leave approvals today?</div>
         <div class="dayflow-ai-quick-grid">
-          <button class="dayflow-ai-quick-btn" onclick="window.DayflowAI.sendPrompt('Give me today\'s workforce summary.')">
+          <button class="dayflow-ai-quick-btn" onclick="window.PulseAI.sendPrompt('Give me today\'s workforce summary.')">
             <span class="material-symbols-outlined" style="font-size: 16px; color: #2878FF;">dashboard</span>
             Workforce Overview
           </button>
-          <button class="dayflow-ai-quick-btn" onclick="window.DayflowAI.sendPrompt('Who is absent today?')">
+          <button class="dayflow-ai-quick-btn" onclick="window.PulseAI.sendPrompt('Who is absent today?')">
             <span class="material-symbols-outlined" style="font-size: 16px; color: #42e18d;">how_to_reg</span>
             Attendance Issues
           </button>
-          <button class="dayflow-ai-quick-btn" onclick="window.DayflowAI.sendPrompt('What leave requests need attention?')">
+          <button class="dayflow-ai-quick-btn" onclick="window.PulseAI.sendPrompt('What leave requests need attention?')">
             <span class="material-symbols-outlined" style="font-size: 16px; color: #d5bbff;">event_busy</span>
             Pending Leave
           </button>
-          <button class="dayflow-ai-quick-btn" onclick="window.DayflowAI.sendPrompt('Is payroll ready for review?')">
+          <button class="dayflow-ai-quick-btn" onclick="window.PulseAI.sendPrompt('Is payroll ready for review?')">
             <span class="material-symbols-outlined" style="font-size: 16px; color: #F4B400;">payments</span>
             Payroll Insights
           </button>
