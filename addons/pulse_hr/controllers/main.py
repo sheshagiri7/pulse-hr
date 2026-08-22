@@ -441,8 +441,8 @@ class PulseApiController(http.Controller):
                 'role': r.job_title or 'Employee',
                 'dept': r.department_id.name if r.department_id else 'Core Engineering',
                 'status': 'Active',
-                'location': r.work_location_id.name if r.work_location_id else 'San Francisco, CA',
-                'phone': r.work_phone or '+1 (555) 234-5678',
+                'location': r.work_location_id.name if r.work_location_id else 'Bengaluru HQ',
+                'phone': r.work_phone or '+91 98765 43210',
                 'email': r.work_email or 'employee@pulse.ai',
                 'checkIn': '08:45 AM',
                 'avatar': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150',
@@ -450,9 +450,9 @@ class PulseApiController(http.Controller):
 
         if not employees:
             employees = [
-                {'id': 'EMP-101', 'db_id': 1, 'name': 'Sarah Jenkins', 'role': 'Lead Architect', 'dept': 'Engineering', 'status': 'Active', 'location': 'San Francisco, CA', 'checkIn': '08:45 AM', 'avatar': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150'},
-                {'id': 'EMP-102', 'db_id': 2, 'name': 'Alex Rivera', 'role': 'Senior Developer', 'dept': 'Engineering', 'status': 'Active', 'location': 'Austin, TX', 'checkIn': '09:02 AM', 'avatar': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150'},
-                {'id': 'EMP-103', 'db_id': 3, 'name': 'Elena Rostova', 'role': 'Product Designer', 'dept': 'Design', 'status': 'Remote', 'location': 'Seattle, WA', 'checkIn': '08:30 AM', 'avatar': 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'},
+                {'id': 'EMP-101', 'db_id': 1, 'name': 'Priya Sharma', 'role': 'Lead Architect', 'dept': 'Engineering', 'status': 'Active', 'location': 'Bengaluru HQ', 'checkIn': '08:45 AM', 'avatar': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150'},
+                {'id': 'EMP-102', 'db_id': 2, 'name': 'Rahul Verma', 'role': 'Senior Developer', 'dept': 'Engineering', 'status': 'Active', 'location': 'Mumbai Office', 'checkIn': '09:02 AM', 'avatar': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150'},
+                {'id': 'EMP-103', 'db_id': 3, 'name': 'Ananya Roy', 'role': 'Product Designer', 'dept': 'Design', 'status': 'Remote', 'location': 'Hyderabad Hub', 'checkIn': '08:30 AM', 'avatar': 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'},
             ]
 
         return self._json_response(employees)
