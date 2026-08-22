@@ -2742,25 +2742,51 @@
       // ==========================================
       const LeaveRequestModal = ({ isOpen, onClose, setCurrentStatus }) => {
         const [modalTab, setModalTab] = useState('status'); // 'status' | 'form'
-        const [hasApplied, setHasApplied] = useState(true);
+        const [hasApplied, setHasApplied] = useState(false);
         const [appliedData, setAppliedData] = useState({
-          id: 'LV-2026-8942',
-          leaveType: 'Casual Leave (Paid)',
-          startDate: '2026-08-28',
-          endDate: '2026-08-30',
+          id: 'LV-2026-0001',
+          leaveType: 'Paid Leave',
+          startDate: '2026-08-25',
+          endDate: '2026-08-27',
           duration: '3 Days',
-          reason: 'Scheduled Annual Downtime & Family Leave',
-          status: 'APPROVED & DISPATCHED',
-          appliedOn: 'Aug 21, 2026 at 09:15 UTC',
-          approver: 'Pulse Enterprise HQ (Security Operations Lead #2)',
-          remainingDays: 15,
+          reason: 'Family Vacation',
+          status: 'PENDING',
+          appliedOn: 'Aug 22, 2026',
+          approver: 'HR Operations Manager',
+          remainingDays: 14,
         });
 
-        const [leaveType, setLeaveType] = useState('Casual Leave');
+        const [leaveType, setLeaveType] = useState('Paid Leave');
         const [startDate, setStartDate] = useState('');
         const [endDate, setEndDate] = useState('');
         const [reason, setReason] = useState('');
         const [isSubmitting, setIsSubmitting] = useState(false);
+
+        useEffect(() => {
+          if (isOpen) {
+            fetch('/api/pulse/leave/balances')
+              .then((res) => res.json())
+              .then((data) => {
+                if (data && data.requests && data.requests.length > 0) {
+                  const latest = data.requests[0];
+                  setHasApplied(true);
+                  setAppliedData({
+                    id: `LV-2026-${latest.id}`,
+                    leaveType: latest.type || 'Paid Leave',
+                    startDate: latest.start_date || '2026-08-25',
+                    endDate: latest.end_date || '2026-08-27',
+                    duration: `${latest.days || 3} Days`,
+                    reason: latest.reason || 'Family Vacation',
+                    status: latest.status || 'PENDING',
+                    appliedOn: 'Odoo Verified Record',
+                    approver: 'HR Operations Manager',
+                    remainingDays: data.balances && data.balances[0] ? data.balances[0].remaining_days : 14,
+                  });
+                }
+              })
+              .catch((err) => console.error('Error fetching leave balances:', err));
+          }
+        }, [isOpen]);
 
         if (!isOpen) return null;
 
@@ -2768,24 +2794,39 @@
           e.preventDefault();
           setIsSubmitting(true);
 
-          setTimeout(() => {
-            setIsSubmitting(false);
-            setHasApplied(true);
-            setAppliedData({
-              id: 'LV-' + Math.floor(1000 + Math.random() * 9000),
-              leaveType: leaveType,
-              startDate: startDate || '2026-09-01',
-              endDate: endDate || '2026-09-03',
-              duration: '2 Days',
-              reason: reason || 'Personal Leave Request',
-              status: 'APPROVED & DISPATCHED',
-              appliedOn: 'Today at ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-              approver: 'Pulse Enterprise HQ (Auto-Cleared)',
-              remainingDays: 13,
+          fetch('/api/pulse/leave/request', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              leave_type: leaveType,
+              start_date: startDate || '2026-09-01',
+              end_date: endDate || '2026-09-03',
+              reason: reason || 'Personal Time Off Request'
+            })
+          })
+            .then((res) => res.json())
+            .then((resData) => {
+              setIsSubmitting(false);
+              setHasApplied(true);
+              setAppliedData({
+                id: `LV-2026-${resData.id || Math.floor(1000 + Math.random() * 9000)}`,
+                leaveType: leaveType,
+                startDate: startDate || '2026-09-01',
+                endDate: endDate || '2026-09-03',
+                duration: '3 Days',
+                reason: reason || 'Personal Time Off Request',
+                status: 'PENDING',
+                appliedOn: 'Today at ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                approver: 'HR Operations Manager',
+                remainingDays: 13,
+              });
+              setCurrentStatus('LEAVE');
+              setModalTab('status');
+            })
+            .catch((err) => {
+              setIsSubmitting(false);
+              console.error('Leave submit error:', err);
             });
-            setCurrentStatus('LEAVE');
-            setModalTab('status');
-          }, 800);
         };
 
         const handleWithdraw = () => {
