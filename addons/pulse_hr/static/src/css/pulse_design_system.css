@@ -1,0 +1,52 @@
+/* ============================================================
+   PULSE HRMS - MASTER GLOBAL DESIGN SYSTEM COLOR TOKENS
+   Visual North Star: Official Pulse Glass Squircle Brand Logo
+   ============================================================ */
+
+:root {
+  /* Core Environment Surfaces */
+  --pulse-dark: #050816;
+  --pulse-navy: #080D24;
+  --pulse-deep-blue: #0B1645;
+  --pulse-surface: #0B1020;
+  --pulse-surface-elevated: #10172B;
+  --pulse-border: #1E2A4A;
+  --pulse-input: #0B1226;
+
+  /* Brand Accents */
+  --pulse-royal-blue: #2457FF;
+  --pulse-electric-blue: #3B82F6;
+  --pulse-cyan: #22D3EE;
+  --pulse-violet: #7C3AED;
+  --pulse-purple: #8B5CF6;
+  --pulse-magenta: #C026D3;
+
+  /* Typography */
+  --pulse-white: #F8FAFC;
+  --pulse-text: #FFFFFF;
+  --pulse-text-secondary: #A5B4CF;
+  --pulse-text-muted: #64748B;
+  --pulse-text-disabled: #475569;
+
+  /* Status / Semantics */
+  --pulse-success: #34D399;
+  --pulse-warning: #F59E0B;
+  --pulse-error: #F43F5E;
+  --pulse-info: #38BDF8;
+
+  /* Ambient Glow Tokens */
+  --pulse-glow-blue: rgba(36, 87, 255, 0.20);
+  --pulse-glow-cyan: rgba(34, 211, 238, 0.16);
+  --pulse-glow-violet: rgba(124, 58, 237, 0.18);
+
+  /* Primary Brand Gradient */
+  --pulse-gradient-primary: linear-gradient(135deg, #2457FF 0%, #22D3EE 45%, #7C3AED 100%);
+  --pulse-gradient-btn: linear-gradient(135deg, #2457FF 0%, #3B82F6 50%, #7C3AED 100%);
+}
+
+/* Global Reset & Surface Inheritance */
+body {
+  background-color: var(--pulse-dark);
+  color: var(--pulse-text);
+  font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}

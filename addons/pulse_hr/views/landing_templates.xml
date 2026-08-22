@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="landing_page" name="Pulse HR Public Landing Page">
+        <html lang="en">
+        <head>
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <title>Pulse — Every Workday, Perfectly Aligned</title>
+            <meta name="description" content="Pulse connects employee profiles, attendance, leave, and payroll into one living workforce platform."/>
+
+            <!-- Official Pulse Favicon -->
+            <link rel="icon" type="image/png" href="/pulse_hr/static/src/img/pulse_logo.png"/>
+            <link rel="shortcut icon" type="image/png" href="/pulse_hr/static/src/img/pulse_logo.png"/>
+            <link rel="apple-touch-icon" href="/pulse_hr/static/src/img/pulse_logo.png"/>
+
+            <!-- Google Fonts -->
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Outfit:wght@500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+
+            <!-- Pulse Landing Styles &amp; Scripts -->
+            <link rel="stylesheet" href="/pulse_hr/static/src/css/pulse_landing.css"/>
+
+            <!-- Embedded Guaranteed Motion & Radar Scan Keyframes -->
+            <style>
+                .pulse-radar-scanline {
+                    position: absolute;
+                    top: 0; left: 0; right: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.2) 20%, rgba(99, 102, 241, 0.8) 50%, rgba(56, 189, 248, 0.2) 80%, transparent 100%);
+                    box-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
+                    opacity: 0.6;
+                    animation: radarScanline 7s linear infinite;
+                    pointer-events: none;
+                    z-index: 3;
+                }
+
+                @keyframes radarScanline {
+                    0% { transform: translateY(-50px); opacity: 0; }
+                    10% { opacity: 0.7; }
+                    90% { opacity: 0.7; }
+                    100% { transform: translateY(100vh); opacity: 0; }
+                }
+
+                .pulse-ambient-orb { position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.38; animation: auraBreathe 10s ease-in-out infinite alternate; }
+                .pulse-hero-orb-1 { width: 640px; height: 640px; background: radial-gradient(circle, #6366F1 0%, rgba(99,102,241,0) 70%); top: -10%; left: 15%; }
+                .pulse-hero-orb-2 { width: 540px; height: 540px; background: radial-gradient(circle, #38BDF8 0%, rgba(56,189,248,0) 70%); bottom: -15%; right: 10%; animation-delay: -5s; }
+                .pulse-hero-orb-3 { width: 480px; height: 480px; background: radial-gradient(circle, #8B5CF6 0%, rgba(139,92,246,0) 70%); top: 35%; left: -10%; animation-delay: -2.5s; }
+                .pulse-hero-orb-4 { width: 400px; height: 400px; background: radial-gradient(circle, #0EA5E9 0%, rgba(14,165,233,0) 70%); bottom: 20%; left: 45%; animation-delay: -7.5s; }
+                @keyframes auraBreathe { 0% { transform: scale(1) translate(0, 0); opacity: 0.32; } 50% { transform: scale(1.18) translate(40px, -30px); opacity: 0.55; } 100% { transform: scale(0.90) translate(-30px, 30px); opacity: 0.35; } }
+
+                .pulse-ribbon-1 { animation: ribbonFlow1 14s ease-in-out infinite alternate; }
+                .pulse-ribbon-2 { animation: ribbonFlow2 18s ease-in-out infinite alternate; }
+                @keyframes ribbonFlow1 { 0% { transform: translate(0, 0) rotate(0deg); opacity: 0.30; } 50% { transform: translate(60px, -45px) rotate(6deg); opacity: 0.50; } 100% { transform: translate(-45px, 40px) rotate(-5deg); opacity: 0.32; } }
+                @keyframes ribbonFlow2 { 0% { transform: translate(0, 0) rotate(0deg); opacity: 0.25; } 50% { transform: translate(-50px, 50px) rotate(-6deg); opacity: 0.45; } 100% { transform: translate(40px, -35px) rotate(5deg); opacity: 0.28; } }
+
+                .card-attendance { animation: floatCardVertical 3.8s ease-in-out infinite alternate !important; }
+                .card-leave { animation: floatCardRotate 5s ease-in-out infinite alternate !important; }
+                .card-id { animation: floatCardDiagonal 6s ease-in-out infinite alternate !important; }
+                @keyframes floatCardVertical { 0% { transform: translateY(0px); } 100% { transform: translateY(-22px); } }
+                @keyframes floatCardDiagonal { 0% { transform: translate(0px, 0px); } 100% { transform: translate(-18px, 18px); } }
+                @keyframes floatCardRotate { 0% { transform: translateY(0px) rotate(0deg); } 100% { transform: translateY(-18px) rotate(3.5deg); } }
+
+                .pulse-glow-wave-line { stroke-dasharray: 300 1300; stroke-dashoffset: 1600; animation: wavePulseTravel 3.2s linear infinite !important; }
+                @keyframes wavePulseTravel { 0% { stroke-dashoffset: 1600; } 100% { stroke-dashoffset: -300; } }
+            </style>
+        </head>
+        <body class="pulse-landing-body">
+
+            <!-- Top Navigation -->
+            <nav class="pulse-nav" id="pulseNav">
+                <div class="pulse-nav-container">
+                    <a href="/" class="pulse-nav-brand">
+                        <img src="/pulse_hr/static/src/img/pulse_logo.png" alt="Pulse Logo" class="pulse-nav-logo-img" style="width: 32px; height: 32px; border-radius: 8px; object-fit: contain; box-shadow: 0 0 14px rgba(99, 102, 241, 0.45);"/>
+                        <span class="pulse-nav-wordmark">PULSE</span>
+                    </a>
+
+                    <div class="pulse-nav-links">
+                        <a href="#product" class="pulse-nav-link">Product</a>
+                        <a href="#features" class="pulse-nav-link">Features</a>
+                        <a href="#employee-experience" class="pulse-nav-link">Employees</a>
+                        <a href="#hr-experience" class="pulse-nav-link">HR</a>
+                        <a href="#identity" class="pulse-nav-link">Identity</a>
+                    </div>
+
+                    <div class="pulse-nav-actions">
+                        <a href="/web/login" class="pulse-btn-nav-signin">
+                            <span>Login →</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Section 1: Scroll-Driven Sticky Hero Scene (~180vh Track) -->
+            <div class="pulse-hero-scroll-track" id="product">
+                <section class="pulse-hero" id="pulseHeroScene">
+                    <!-- Living Multi-Layered Cinematic Background Environment -->
+                    <div class="pulse-hero-bg" id="heroBg">
+                        <!-- Laser Radar Sweep Line -->
+                        <div class="pulse-radar-scanline"></div>
+                        <!-- Layer 1: Deep Atmosphere Orbs -->
+                        <div class="pulse-ambient-orb pulse-hero-orb-1"></div>
+                        <div class="pulse-ambient-orb pulse-hero-orb-2"></div>
+                        <div class="pulse-ambient-orb pulse-hero-orb-3"></div>
+                        <div class="pulse-ambient-orb pulse-hero-orb-4"></div>
+                        <div class="pulse-grid-overlay"></div>
+
+                        <!-- Layer 2: Abstract Flowing Light Ribbons / Energy Waves -->
+                        <div class="pulse-ribbon-wrapper ribbon-wrap-1">
+                            <svg class="pulse-light-ribbon pulse-ribbon-1" viewBox="0 0 1200 600" fill="none">
+                                <path d="M-100,300 C200,100 500,500 800,200 C1000,0 1200,400 1400,200" stroke="url(#ribbonGrad1)" stroke-width="85" stroke-linecap="round" opacity="0.35"/>
+                                <defs>
+                                    <linearGradient id="ribbonGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#6366F1" stop-opacity="0.9"/>
+                                        <stop offset="50%" stop-color="#38BDF8" stop-opacity="0.95"/>
+                                        <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.3"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+
+                        <div class="pulse-ribbon-wrapper ribbon-wrap-2">
+                            <svg class="pulse-light-ribbon pulse-ribbon-2" viewBox="0 0 1200 600" fill="none">
+                                <path d="M-200,150 C150,450 600,100 900,400 C1100,600 1300,100 1500,350" stroke="url(#ribbonGrad2)" stroke-width="110" stroke-linecap="round" opacity="0.3"/>
+                                <defs>
+                                    <linearGradient id="ribbonGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#0EA5E9" stop-opacity="0.85"/>
+                                        <stop offset="50%" stop-color="#818CF8" stop-opacity="0.9"/>
+                                        <stop offset="100%" stop-color="#34D399" stop-opacity="0.2"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+
+                        <!-- Layer 4: Connected System Canvas Nodes -->
+                        <canvas id="pulseNodeCanvas" class="pulse-node-canvas"></canvas>
+
+                        <!-- Layer 5: Integrated Flowing Heartbeat Waveform -->
+                        <svg class="pulse-waveform-svg" id="heroWaveform" viewBox="0 0 1440 320" fill="none" preserveAspectRatio="none">
+                            <path class="pulse-base-wave-line" d="M0,160 L360,160 L390,120 L420,220 L450,80 L480,190 L510,160 L1440,160" stroke="url(#pulseLineGradient)" stroke-width="3" stroke-linecap="round"/>
+                            <path class="pulse-glow-wave-line" d="M0,160 L360,160 L390,120 L420,220 L450,80 L480,190 L510,160 L1440,160" stroke="#38BDF8" stroke-width="4" stroke-linecap="round"/>
+                            <defs>
+                                <linearGradient id="pulseLineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#6366F1" stop-opacity="0.1"/>
+                                    <stop offset="35%" stop-color="#38BDF8" stop-opacity="0.95"/>
+                                    <stop offset="65%" stop-color="#818CF8" stop-opacity="0.95"/>
+                                    <stop offset="100%" stop-color="#34D399" stop-opacity="0.1"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+
+                    <!-- 3 Floating Product Cards with Outer Parallax Wrappers + Inner CSS Floating Cards -->
+                    <!-- Card 1: Attendance (Left) -->
+                    <div class="pulse-card-wrapper wrap-attendance" id="wrapAttendance">
+                        <div class="pulse-float-card card-attendance" id="heroCardAttendance">
+                            <div class="p-card-header">
+                                <span class="p-card-label">ATTENDANCE</span>
+                            </div>
+                            <div class="p-card-status-row">
+                                <span class="p-status-dot-pulse"></span>
+                                <span class="p-card-stat">Checked in</span>
+                            </div>
+                            <div class="p-card-sub">Check-in / Check-out</div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Leave Request (Top Right) -->
+                    <div class="pulse-card-wrapper wrap-leave" id="wrapLeave">
+                        <div class="pulse-float-card card-leave" id="heroCardLeave">
+                            <div class="p-card-header">
+                                <span class="p-card-label">LEAVE REQUEST</span>
+                            </div>
+                            <div class="p-card-stat">Paid Leave</div>
+                            <div class="p-card-dates">25 Aug → 26 Aug</div>
+                            <div class="p-card-sub p-sub-green">✓ Approved</div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Employee ID (Bottom Right) -->
+                    <div class="pulse-card-wrapper wrap-id" id="wrapId">
+                        <div class="pulse-float-card card-id" id="heroCardId">
+                            <div class="p-card-header">
+                                <span class="p-card-label">EMPLOYEE ID</span>
+                            </div>
+                            <div class="p-card-code">OIJODO20260001</div>
+                            <div class="p-card-sub p-sub-green">✓ Automatically generated</div>
+                        </div>
+                    </div>
+
+                    <!-- Hero Content Container (Calm & Stationary Foreground) -->
+                    <div class="pulse-hero-content" id="heroContent">
+                        <h1 class="pulse-hero-title" id="heroTitle">
+                            PULSE<br/>
+                            Every workday,<br/>
+                            <span class="pulse-gradient-glow">perfectly aligned.</span>
+                        </h1>
+
+                        <p class="pulse-hero-sub" id="heroSub">
+                            One connected workspace for employees, attendance, leave and HR operations.
+                        </p>
+
+                        <div class="pulse-hero-ctas" id="heroCtas">
+                            <a href="#features" class="pulse-btn-primary">
+                                Explore Pulse
+                            </a>
+                            <a href="/web/login" class="pulse-btn-secondary">
+                                Login →
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Section 2: Connected Workforce Section -->
+            <section class="pulse-section pulse-features-section" id="features">
+                <div class="pulse-container">
+                    <div class="pulse-section-header">
+                        <span class="pulse-section-tag">CONNECTED WORKFORCE</span>
+                        <h2 class="pulse-section-title">ONE WORKFORCE.<br/><span class="pulse-gradient-glow">ONE CONNECTED FLOW.</span></h2>
+                        <p class="pulse-section-sub">Employee ➔ Attendance ➔ Leave ➔ Payroll unified on a single Odoo operating baseline.</p>
+                    </div>
+
+                    <div class="pulse-features-grid">
+                        <!-- Feature 1 -->
+                        <div class="pulse-feature-card" data-reveal="bottom">
+                            <div class="pulse-feat-icon feat-blue">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            </div>
+                            <h3 class="pulse-feat-title">EMPLOYEES</h3>
+                            <p class="pulse-feat-desc">Connected employee directory with instant role hierarchy, automated user provisioning, and full profile history.</p>
+                            <div class="pulse-feat-badge">Workforce Registry</div>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="pulse-feature-card" data-reveal="bottom" data-delay="100">
+                            <div class="pulse-feat-icon feat-green">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            </div>
+                            <h3 class="pulse-feat-title">ATTENDANCE</h3>
+                            <p class="pulse-feat-desc">Real-time check-in presence tracking, streak counters, and live active workforce activity.</p>
+                            <div class="pulse-feat-badge">Live Presence</div>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div class="pulse-feature-card" data-reveal="bottom" data-delay="200">
+                            <div class="pulse-feat-icon feat-violet">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            </div>
+                            <h3 class="pulse-feat-title">LEAVE</h3>
+                            <p class="pulse-feat-desc">Streamlined time-off requests, remaining balance progress tracking, and multi-tier approval flows.</p>
+                            <div class="pulse-feat-badge">Time Off Balance</div>
+                        </div>
+
+                        <!-- Feature 4 -->
+                        <div class="pulse-feature-card" data-reveal="bottom" data-delay="300">
+                            <div class="pulse-feat-icon feat-pink">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                            </div>
+                            <h3 class="pulse-feat-title">PAYROLL</h3>
+                            <p class="pulse-feat-desc">Verified salary structures, automatic calculation hooks, and compliant audit trails for workforce management.</p>
+                            <div class="pulse-feat-badge">Financial Sync</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Employee Experience Section -->
+            <section class="pulse-section pulse-experience-section" id="employee-experience">
+                <div class="pulse-container">
+                    <div class="pulse-section-header">
+                        <span class="pulse-section-tag">EMPLOYEE EXPERIENCE</span>
+                        <h2 class="pulse-section-title">YOUR WORKDAY,<br/><span class="pulse-gradient-glow">IN ONE PLACE.</span></h2>
+                        <p class="pulse-section-sub">A friction-free daily portal designed for rapid check-ins, time-off requests, and personal records.</p>
+                    </div>
+
+                    <div class="pulse-exp-grid">
+                        <div class="pulse-exp-card" data-reveal="left">
+                            <div class="exp-card-header">
+                                <span class="exp-tag">PROFILE</span>
+                                <h4>Personal Identity</h4>
+                            </div>
+                            <p>Unique company Login ID (`OIJODO20260001`), job title, and team structure instantly accessible.</p>
+                        </div>
+
+                        <div class="pulse-exp-card" data-reveal="bottom">
+                            <div class="exp-card-header">
+                                <span class="exp-tag tag-green">ATTENDANCE</span>
+                                <h4>One-Click Presence</h4>
+                            </div>
+                            <p>Instant check-in/out timestamping with streak counters and daily activity logs.</p>
+                        </div>
+
+                        <div class="pulse-exp-card" data-reveal="bottom" data-delay="100">
+                            <div class="exp-card-header">
+                                <span class="exp-tag tag-violet">LEAVE</span>
+                                <h4>Time Off Requests</h4>
+                            </div>
+                            <p>Track leave balance, submit time-off requests, and monitor approval status in real-time.</p>
+                        </div>
+
+                        <div class="pulse-exp-card" data-reveal="right" data-delay="200">
+                            <div class="exp-card-header">
+                                <span class="exp-tag tag-pink">PAYROLL</span>
+                                <h4>Salary Visibility</h4>
+                            </div>
+                            <p>Transparent salary structure, payslips, and automated tax breakdown documentation.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: HR Experience Section -->
+            <section class="pulse-section pulse-experience-section" id="hr-experience">
+                <div class="pulse-container">
+                    <div class="pulse-section-header">
+                        <span class="pulse-section-tag">HR / ADMIN EXPERIENCE</span>
+                        <h2 class="pulse-section-title">YOUR WORKFORCE,<br/><span class="pulse-gradient-glow">ONE CLEAR VIEW.</span></h2>
+                        <p class="pulse-section-sub">Complete workforce management, automated provisioning, leave approvals, and payroll controls.</p>
+                    </div>
+
+                    <div class="pulse-exp-grid">
+                        <div class="pulse-exp-card hr-card" data-reveal="left">
+                            <div class="exp-card-header">
+                                <span class="exp-tag tag-blue">PROVISIONING</span>
+                                <h4>Automated ID Generation</h4>
+                            </div>
+                            <p>Creating an employee instantly generates a secure company Login ID and initial credentials.</p>
+                        </div>
+
+                        <div class="pulse-exp-card hr-card" data-reveal="bottom">
+                            <div class="exp-card-header">
+                                <span class="exp-tag tag-green">MONITORING</span>
+                                <h4>Workforce Presence</h4>
+                            </div>
+                            <p>Live active workforce monitoring with department attendance percentages and check-in times.</p>
+                        </div>
+
+                        <div class="pulse-exp-card hr-card" data-reveal="bottom" data-delay="100">
+                            <div class="exp-card-header">
+                                <span class="exp-tag tag-violet">APPROVALS</span>
+                                <h4>Leave Workflows</h4>
+                            </div>
+                            <p>Multi-tier approval controls with team availability overlap checking and notification alerts.</p>
+                        </div>
+
+                        <div class="pulse-exp-card hr-card" data-reveal="right" data-delay="200">
+                            <div class="exp-card-header">
+                                <span class="exp-tag tag-pink">FINANCIALS</span>
+                                <h4>Payroll Sync</h4>
+                            </div>
+                            <p>Automated salary calculation hooks, attendance penalty adjustments, and compliant audit trails.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: Identity Differentiator Section -->
+            <section class="pulse-section pulse-identity-section" id="identity">
+                <div class="pulse-container">
+                    <div class="pulse-identity-box" data-reveal="center">
+                        <div class="pulse-identity-text">
+                            <span class="pulse-section-tag">KEY DIFFERENTIATOR</span>
+                            <h2 class="pulse-section-title">IDENTITY, AUTOMATED.</h2>
+                            <p class="pulse-section-sub">
+                                When HR creates an employee, Pulse automatically generates a unique company identity and first-time secure user credentials instantly.
+                            </p>
+                        </div>
+
+                        <!-- Interactive Animated Sequence Visualizer -->
+                        <div class="pulse-id-demo-container">
+                            <div class="pulse-demo-flow-steps">
+                                <div class="pulse-demo-step step-1">
+                                    <span class="step-label">CREATE EMPLOYEE</span>
+                                </div>
+                                <div class="pulse-demo-arrow">→</div>
+                                <div class="pulse-demo-step step-2">
+                                    <span class="step-label">PULSE</span>
+                                </div>
+                                <div class="pulse-demo-arrow">→</div>
+                                <div class="pulse-demo-step step-3">
+                                    <span class="step-label">GENERATING ID</span>
+                                </div>
+                            </div>
+
+                            <div class="pulse-demo-code-box" id="pulseIdCodeBox">
+                                <span class="code-char">O</span>
+                                <span class="code-char">I</span>
+                                <span class="code-char">J</span>
+                                <span class="code-char">O</span>
+                                <span class="code-char">D</span>
+                                <span class="code-char">O</span>
+                                <span class="code-char">2</span>
+                                <span class="code-char">0</span>
+                                <span class="code-char">2</span>
+                                <span class="code-char">6</span>
+                                <span class="code-char">0</span>
+                                <span class="code-char">0</span>
+                                <span class="code-char">0</span>
+                                <span class="code-char">1</span>
+                            </div>
+                            <div class="pulse-demo-status" id="pulseIdStatus">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>✓ READY</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: Role-Based Perspectives Section -->
+            <section class="pulse-section pulse-perspectives-section" id="perspectives">
+                <div class="pulse-container">
+                    <div class="pulse-section-header">
+                        <span class="pulse-section-tag">PERSPECTIVES</span>
+                        <h2 class="pulse-section-title">ONE PULSE.<br/><span class="pulse-gradient-glow">TWO EXPERIENCES.</span></h2>
+                        <p class="pulse-section-sub">Tailored user experiences designed specifically for daily employee engagement and HR administration.</p>
+                    </div>
+
+                    <div class="pulse-perspectives-grid">
+                        <!-- Employee Perspective Card -->
+                        <div class="pulse-perspective-card" id="employees" data-reveal="left">
+                            <div class="perspective-badge emp-badge">EMPLOYEE</div>
+                            <h3 class="perspective-title">"Everything you need for your workday."</h3>
+                            <ul class="perspective-list">
+                                <li><span class="list-dot"></span> Personal Profile &amp; Login ID</li>
+                                <li><span class="list-dot"></span> Live One-Click Check-in &amp; Check-out</li>
+                                <li><span class="list-dot"></span> Attendance Streak &amp; Momentum</li>
+                                <li><span class="list-dot"></span> Time Off Balance &amp; Request Status</li>
+                                <li><span class="list-dot"></span> Salary Slips &amp; Verification</li>
+                            </ul>
+                        </div>
+
+                        <!-- HR / Admin Perspective Card -->
+                        <div class="pulse-perspective-card" id="hr" data-reveal="right">
+                            <div class="perspective-badge hr-badge">HR / ADMIN</div>
+                            <h3 class="perspective-title">"Everything you need to run your workforce."</h3>
+                            <ul class="perspective-list">
+                                <li><span class="list-dot"></span> Automated Employee Creation &amp; ID Generation</li>
+                                <li><span class="list-dot"></span> Live Workforce Attendance Monitoring</li>
+                                <li><span class="list-dot"></span> Leave Approval Workflows</li>
+                                <li><span class="list-dot"></span> Payroll Processing &amp; Verification</li>
+                                <li><span class="list-dot"></span> Department Activity Analytics</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 7: Momentum Box -->
+            <section class="pulse-section pulse-momentum-section">
+                <div class="pulse-container">
+                    <div class="pulse-momentum-box">
+                        <div class="momentum-stat">
+                            <div class="momentum-val">100<span class="val-unit">%</span></div>
+                            <div class="momentum-label">Connected Workspace</div>
+                        </div>
+                        <div class="momentum-divider"></div>
+                        <div class="momentum-stat">
+                            <div class="momentum-val">Real-time</div>
+                            <div class="momentum-label">Attendance Sync</div>
+                        </div>
+                        <div class="momentum-divider"></div>
+                        <div class="momentum-stat">
+                            <div class="momentum-val">Instant</div>
+                            <div class="momentum-label">Automated ID Security</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 8: Final Closing Section -->
+            <section class="pulse-section pulse-closing-section">
+                <div class="pulse-container">
+                    <div class="pulse-closing-card" data-reveal="center">
+                        <div class="pulse-closing-orb"></div>
+                        <h2 class="pulse-closing-title">KEEP EVERY WORKDAY IN SYNC.</h2>
+                        <p class="pulse-closing-sub">
+                            Pulse connects employees, HR workflows and workforce information in one experience.
+                        </p>
+                        <a href="/web/login" class="pulse-btn-primary pulse-btn-large">
+                            ENTER PULSE →
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="pulse-footer">
+                <div class="pulse-container pulse-footer-container">
+                    <div class="pulse-footer-brand">
+                        <span class="footer-wordmark">PULSE</span>
+                        <span class="footer-hackathon-badge">Odoo x NMIT Bangalore Hackathon 2026</span>
+                    </div>
+                    <div class="pulse-footer-links">
+                        <a href="/web/login">Login</a>
+                        <a href="#product">Product</a>
+                        <a href="#features">Features</a>
+                    </div>
+                </div>
+            </footer>
+
+            <script src="/pulse_hr/static/src/js/pulse_landing.js"></script>
+        </body>
+        </html>
+    </template>
+</odoo>

@@ -6,6 +6,7 @@
         Extends Odoo HR with:
         - Auto-generated employee Login ID and first-time password
         - Role-based dashboard with live attendance status
+        - Custom full-screen Pulse Login UI (/web/login)
     """,
     'category': 'Human Resources',
     'author': 'Team Pulse',
@@ -14,6 +15,8 @@
         'security/ir.model.access.csv',
         'views/employee_views.xml',
         'views/dashboard_views.xml',
+        'views/landing_templates.xml',
+        'views/login_templates.xml',
         'data/demo_data.xml',
     ],
     'installable': True,

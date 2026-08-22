@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="pulse_custom_login" inherit_id="web.login" name="Pulse Custom Login Page">
+        <xpath expr="//t[@t-call='web.login_layout']" position="replace">
+            <html lang="en">
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <title>Pulse — Login to Workspace</title>
+                <meta name="description" content="Pulse HR Management System Login Portal"/>
+
+                <!-- Official Pulse Favicon -->
+                <link rel="icon" type="image/png" href="/pulse_hr/static/src/img/pulse_logo.png"/>
+                <link rel="shortcut icon" type="image/png" href="/pulse_hr/static/src/img/pulse_logo.png"/>
+                <link rel="apple-touch-icon" href="/pulse_hr/static/src/img/pulse_logo.png"/>
+
+                <!-- Google Fonts -->
+                <link rel="preconnect" href="https://fonts.googleapis.com"/>
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Outfit:wght@600;700;800;900&amp;display=swap" rel="stylesheet"/>
+
+                <!-- Dedicated Pulse Login Stylesheet -->
+                <link rel="stylesheet" href="/pulse_hr/static/src/css/pulse_login.css"/>
+
+                <!-- Embedded Guaranteed CSS Fallback -->
+                <style>
+                    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+                    html, body.pulse-login-body { width: 100%; height: 100%; margin: 0; padding: 0; overflow-x: hidden; font-family: 'Inter', sans-serif; background-color: #08090D; color: #FFFFFF; }
+                    .pulse-login-page { width: 100vw; height: 100vh; display: flex; position: relative; overflow: hidden; background-color: #08090D; }
+                    .pulse-login-visual-side { flex: 1 1 58%; position: relative; display: flex; flex-direction: column; justify-content: space-between; padding: 3rem 4rem; overflow: hidden; z-index: 5; }
+                    .pulse-login-bg { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+                    .pulse-ambient-orb { position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.28; animation: auraBreathe 18s ease-in-out infinite alternate; }
+                    .orb-1 { width: 580px; height: 580px; background: radial-gradient(circle, #6366F1 0%, rgba(99, 102, 241, 0) 70%); top: -15%; left: 10%; }
+                    .orb-2 { width: 500px; height: 500px; background: radial-gradient(circle, #38BDF8 0%, rgba(56, 189, 248, 0) 70%); bottom: -10%; right: 5%; animation-delay: -9s; }
+                    .orb-3 { width: 400px; height: 400px; background: radial-gradient(circle, #8B5CF6 0%, rgba(139, 92, 246, 0) 70%); top: 40%; left: -10%; animation-delay: -4.5s; }
+                    .orb-4 { width: 320px; height: 320px; background: radial-gradient(circle, #0EA5E9 0%, rgba(14, 165, 233, 0) 70%); bottom: 25%; left: 35%; animation-delay: -13s; }
+                    @keyframes auraBreathe { 0% { transform: scale(1) translate(0, 0); opacity: 0.24; } 50% { transform: scale(1.1) translate(20px, -15px); opacity: 0.35; } 100% { transform: scale(0.95) translate(-15px, 15px); opacity: 0.26; } }
+                    .pulse-ribbon-wrapper { position: absolute; inset: 0; pointer-events: none; }
+                    .pulse-light-ribbon { position: absolute; width: 140%; height: 140%; top: -20%; left: -20%; pointer-events: none; }
+                    .pulse-ribbon-1 { animation: ribbonFlow1 24s ease-in-out infinite alternate; }
+                    .pulse-ribbon-2 { animation: ribbonFlow2 28s ease-in-out infinite alternate; }
+                    @keyframes ribbonFlow1 { 0% { transform: translate(0,0) rotate(0deg); opacity: 0.18; } 50% { transform: translate(35px,-25px) rotate(3deg); opacity: 0.28; } 100% { transform: translate(-25px,20px) rotate(-2deg); opacity: 0.20; } }
+                    @keyframes ribbonFlow2 { 0% { transform: translate(0,0) rotate(0deg); opacity: 0.14; } 50% { transform: translate(-30px,30px) rotate(-3deg); opacity: 0.25; } 100% { transform: translate(20px,-15px) rotate(2deg); opacity: 0.16; } }
+                    .pulse-login-grid { position: absolute; inset: 0; background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px); background-size: 40px 40px; opacity: 0.5; }
+                    .pulse-login-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.75; }
+                    .pulse-login-waveform { position: absolute; width: 100%; top: 55%; left: 0; transform: translateY(-50%); opacity: 0.75; }
+                    .pulse-base-wave-line { opacity: 0.5; }
+                    .pulse-glow-wave-line { stroke-dasharray: 300 1300; stroke-dashoffset: 1600; animation: wavePulseTravel 6s linear infinite; }
+                    @keyframes wavePulseTravel { 0% { stroke-dashoffset: 1600; } 100% { stroke-dashoffset: -300; } }
+                    .pulse-visual-content { position: relative; z-index: 10; max-width: 540px; }
+                    .pulse-visual-brand { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; margin-bottom: 3.5rem; }
+                    .brand-logo { width: 38px; height: 38px; background: linear-gradient(135deg, #6366F1 0%, #3B82F6 50%, #10B981 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #FFFFFF; box-shadow: 0 0 20px rgba(99, 102, 241, 0.35); }
+                    .brand-name { font-family: 'Outfit', sans-serif; font-size: 1.45rem; font-weight: 900; letter-spacing: -0.03em; color: #FFFFFF; }
+                    .visual-headline { font-family: 'Outfit', sans-serif; font-size: 3.5rem; font-weight: 900; line-height: 1.08; letter-spacing: -0.03em; color: #FFFFFF; margin-bottom: 1.15rem; }
+                    .gradient-text { background: linear-gradient(135deg, #818CF8 0%, #38BDF8 50%, #34D399 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+                    .visual-subtext { font-size: 1.15rem; color: #A1A1AA; line-height: 1.6; max-width: 440px; }
+                    .pulse-card-wrapper { position: absolute; z-index: 8; pointer-events: auto; }
+                    .wrap-attendance { top: 22%; right: 8%; }
+                    .wrap-leave { top: 48%; right: 18%; }
+                    .wrap-id { bottom: 12%; left: 8%; }
+                    .pulse-login-card { background: #111218; border: 1px solid #20222C; border-radius: 16px; padding: 1rem 1.25rem; box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7); min-width: 210px; }
+                    .card-attendance { animation: floatCardVertical 7s ease-in-out infinite alternate; }
+                    .card-leave { animation: floatCardRotate 8s ease-in-out infinite alternate; }
+                    .card-id { animation: floatCardDiagonal 9s ease-in-out infinite alternate; }
+                    @keyframes floatCardVertical { 0% { transform: translateY(0px); } 100% { transform: translateY(-12px); } }
+                    @keyframes floatCardDiagonal { 0% { transform: translate(0px, 0px); } 100% { transform: translate(-10px, 10px); } }
+                    @keyframes floatCardRotate { 0% { transform: translateY(0px) rotate(0deg); } 100% { transform: translateY(-10px) rotate(1.8deg); } }
+                    .card-tag { font-size: 0.65rem; font-weight: 800; color: #71717A; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.35rem; }
+                    .card-status { display: flex; align-items: center; gap: 0.45rem; }
+                    .status-dot { width: 7px; height: 7px; border-radius: 50%; background-color: #10B981; box-shadow: 0 0 8px #10B981; }
+                    .status-title, .card-title { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #FFFFFF; }
+                    .card-dates { font-size: 0.78rem; color: #A1A1AA; font-weight: 500; margin-top: 0.1rem; }
+                    .card-sub { font-size: 0.75rem; color: #71717A; margin-top: 0.2rem; }
+                    .sub-green { color: #34D399; font-weight: 600; }
+                    .card-code { font-family: monospace; font-size: 1rem; font-weight: 800; color: #38BDF8; letter-spacing: 0.05em; }
+
+                    /* Form Side */
+                    .pulse-login-form-side { flex: 1 1 42%; display: flex; align-items: center; justify-content: center; padding: 2rem; position: relative; z-index: 10; background: rgba(8, 9, 13, 0.6); border-left: 1px solid #20222C; }
+                    .pulse-card-ambient-glow { position: absolute; width: 380px; height: 380px; background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(99, 102, 241, 0) 70%); border-radius: 50%; filter: blur(60px); pointer-events: none; }
+                    .pulse-login-glass-card { width: 100%; max-width: 420px; background: #111218; border: 1px solid #20222C; border-radius: 20px; padding: 2.25rem 2rem; box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85); position: relative; }
+                    .form-header { margin-bottom: 1.5rem; text-align: left; }
+                    .form-badge { display: inline-block; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.12em; color: #818CF8; text-transform: uppercase; margin-bottom: 0.65rem; }
+
+                    /* Top Role Switcher Tabs (Placed Above Welcome Back) */
+                    .pulse-top-role-switcher { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 1.5rem; background: #0C0D12; padding: 0.35rem; border-radius: 14px; border: 1px solid #20222C; }
+                    .pulse-role-tab { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.65rem 0.75rem; border-radius: 10px; background: transparent; border: 1px solid transparent; color: #71717A; cursor: pointer; outline: none; transition: all 0.2s ease; text-align: left; }
+                    .pulse-role-tab:hover { color: #A1A1AA; background: rgba(255, 255, 255, 0.03); }
+                    .pulse-role-tab.selected { background: #161824; border-color: #6366F1; color: #FFFFFF; box-shadow: 0 0 12px rgba(99, 102, 241, 0.25); }
+                    .pulse-role-tab.selected.tab-hr { border-color: #10B981; box-shadow: 0 0 12px rgba(16, 185, 129, 0.25); }
+                    .role-tab-icon { flex-shrink: 0; color: #71717A; transition: color 0.2s ease; }
+                    .selected .role-tab-icon { color: #818CF8; }
+                    .selected.tab-hr .role-tab-icon { color: #34D399; }
+                    .role-tab-text { display: flex; flex-direction: column; }
+                    .tab-title { font-family: 'Outfit', sans-serif; font-size: 0.88rem; font-weight: 800; line-height: 1.1; }
+                    .tab-sub { font-size: 0.68rem; color: #71717A; }
+                    .selected .tab-sub { color: #94A3B8; }
+
+                    .header-brand-row { display: flex; align-items: center; gap: 0.45rem; margin-bottom: 0.75rem; }
+                    .brand-mini-logo { width: 24px; height: 24px; background: linear-gradient(135deg, #6366F1 0%, #3B82F6 100%); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+                    .form-wordmark { font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 900; letter-spacing: 0.04em; color: #FFFFFF; }
+                    .form-title { font-family: 'Outfit', sans-serif; font-size: 1.95rem; font-weight: 800; color: #FFFFFF; letter-spacing: -0.02em; margin-bottom: 0.25rem; }
+                    .form-subtitle { font-size: 0.9rem; color: #A1A1AA; }
+                    .pulse-form { display: flex; flex-direction: column; gap: 1.1rem; }
+                    .pulse-form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+                    .pulse-label { font-size: 0.85rem; font-weight: 600; color: #A1A1AA; }
+                    .input-inner-wrap { position: relative; display: flex; align-items: center; }
+                    .input-icon { position: absolute; left: 1rem; color: #71717A; pointer-events: none; transition: color 0.2s ease; }
+                    .pulse-input { width: 100%; padding: 0.75rem 1rem 0.75rem 2.75rem; background: #0C0D12; border: 1px solid #20222C; border-radius: 12px; color: #FFFFFF; font-size: 0.92rem; font-family: inherit; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+                    .pulse-input::placeholder { color: #475569; }
+                    .pulse-input:hover { border-color: #333644; }
+                    .pulse-input:focus { border-color: #6366F1; box-shadow: 0 0 14px rgba(99, 102, 241, 0.25); }
+                    .input-inner-wrap:focus-within .input-icon { color: #818CF8; }
+                    .pulse-input.input-error { border-color: #EF4444 !important; box-shadow: 0 0 10px rgba(239, 68, 68, 0.2) !important; }
+                    .password-toggle-btn { position: absolute; right: 0.75rem; background: transparent; border: none; color: #71717A; cursor: pointer; padding: 0.35rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; }
+                    .password-toggle-btn:hover { color: #FFFFFF; }
+                    .pulse-inline-error { font-size: 0.78rem; font-weight: 500; color: #FCA5A5; margin-top: 0.15rem; display: flex; align-items: center; gap: 0.3rem; }
+                    .pulse-alert-error { display: flex; align-items: center; gap: 0.55rem; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #FCA5A5; padding: 0.7rem 0.9rem; border-radius: 10px; font-size: 0.85rem; font-weight: 500; }
+                    .pulse-alert-success { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #6EE7B7; padding: 0.7rem 0.9rem; border-radius: 10px; font-size: 0.85rem; font-weight: 500; }
+                    .pulse-submit-row { margin-top: 0.3rem; }
+                    .pulse-btn-login { width: 100%; padding: 0.82rem; border: none; border-radius: 12px; background: linear-gradient(135deg, #6366F1 0%, #3B82F6 50%, #10B981 100%); color: #FFFFFF; font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 800; cursor: pointer; box-shadow: 0 8px 25px -4px rgba(99, 102, 241, 0.45); transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+                    .pulse-btn-login:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 12px 30px -4px rgba(99, 102, 241, 0.65); filter: brightness(1.06); }
+                    .pulse-spinner { width: 18px; height: 18px; border: 2px solid rgba(255, 255, 255, 0.3); border-top-color: #FFFFFF; border-radius: 50%; animation: pulseSpinnerRotate 0.8s linear infinite; }
+                    @keyframes pulseSpinnerRotate { to { transform: rotate(360deg); } }
+                    .form-footer { margin-top: 1.4rem; text-align: center; }
+                    .footer-text { font-size: 0.78rem; color: #71717A; }
+                    @media (max-width: 1024px) {
+                        .pulse-login-page { flex-direction: column; height: auto; min-height: 100vh; }
+                        .pulse-login-visual-side { padding: 3rem 2rem 2rem 2rem; flex: none; min-height: 300px; }
+                        .visual-headline { font-size: 2.35rem; }
+                        .pulse-card-wrapper { display: none; }
+                        .pulse-login-form-side { flex: 1; padding: 2rem 1.5rem 3rem 1.5rem; border-left: none; border-top: 1px solid #20222C; }
+                    }
+                </style>
+            </head>
+            <body class="pulse-login-body">
+                <div class="pulse-login-page">
+                    
+                    <!-- Left Column: Living Pulse Environment & Brand Showcase -->
+                    <div class="pulse-login-visual-side">
+                        <!-- Living 5-Layer Background Environment -->
+                        <div class="pulse-login-bg">
+                            <!-- Layer 1: Ambient Light Orbs -->
+                            <div class="pulse-ambient-orb orb-1"></div>
+                            <div class="pulse-ambient-orb orb-2"></div>
+                            <div class="pulse-ambient-orb orb-3"></div>
+                            <div class="pulse-ambient-orb orb-4"></div>
+                            <div class="pulse-login-grid"></div>
+
+                            <!-- Layer 2: Abstract Light Ribbons -->
+                            <div class="pulse-ribbon-wrapper ribbon-wrap-1">
+                                <svg class="pulse-light-ribbon pulse-ribbon-1" viewBox="0 0 1200 600" fill="none">
+                                    <path d="M-100,300 C200,100 500,500 800,200 C1000,0 1200,400 1400,200" stroke="url(#loginRibbonGrad1)" stroke-width="85" stroke-linecap="round" opacity="0.25"/>
+                                    <defs>
+                                        <linearGradient id="loginRibbonGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#6366F1" stop-opacity="0.8"/>
+                                            <stop offset="50%" stop-color="#38BDF8" stop-opacity="0.85"/>
+                                            <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.2"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+
+                            <div class="pulse-ribbon-wrapper ribbon-wrap-2">
+                                <svg class="pulse-light-ribbon pulse-ribbon-2" viewBox="0 0 1200 600" fill="none">
+                                    <path d="M-200,150 C150,450 600,100 900,400 C1100,600 1300,100 1500,350" stroke="url(#loginRibbonGrad2)" stroke-width="110" stroke-linecap="round" opacity="0.2"/>
+                                    <defs>
+                                        <linearGradient id="loginRibbonGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#0EA5E9" stop-opacity="0.75"/>
+                                            <stop offset="50%" stop-color="#818CF8" stop-opacity="0.8"/>
+                                            <stop offset="100%" stop-color="#34D399" stop-opacity="0.15"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+
+                            <!-- Layer 4: Connected Canvas Node Network -->
+                            <canvas id="pulseLoginCanvas" class="pulse-login-canvas"></canvas>
+
+                            <!-- Layer 5: Integrated Flowing Heartbeat Waveform -->
+                            <svg class="pulse-login-waveform" viewBox="0 0 1440 320" fill="none" preserveAspectRatio="none">
+                                <path class="pulse-base-wave-line" d="M0,160 L360,160 L390,120 L420,220 L450,80 L480,190 L510,160 L1440,160" stroke="url(#loginWaveGrad)" stroke-width="2.5" stroke-linecap="round"/>
+                                <path class="pulse-glow-wave-line" d="M0,160 L360,160 L390,120 L420,220 L450,80 L480,190 L510,160 L1440,160" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
+                                <defs>
+                                    <linearGradient id="loginWaveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#6366F1" stop-opacity="0.1"/>
+                                        <stop offset="35%" stop-color="#38BDF8" stop-opacity="0.85"/>
+                                        <stop offset="65%" stop-color="#818CF8" stop-opacity="0.85"/>
+                                        <stop offset="100%" stop-color="#34D399" stop-opacity="0.1"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+
+                        <!-- Left Hero Content & Branding -->
+                        <div class="pulse-visual-content">
+                            <a href="/" class="pulse-visual-brand">
+                                <img src="/pulse_hr/static/src/img/pulse_logo.png" alt="Pulse Logo" style="width: 38px; height: 38px; border-radius: 10px; object-fit: contain; box-shadow: 0 0 20px rgba(99, 102, 241, 0.45);"/>
+                                <span class="brand-name">PULSE</span>
+                            </a>
+
+                            <h1 class="visual-headline">
+                                Every workday,<br/>
+                                <span class="gradient-text">perfectly aligned.</span>
+                            </h1>
+
+                            <p class="visual-subtext">
+                                One connected workspace for employees and HR teams.
+                            </p>
+                        </div>
+
+                        <!-- 3 Product Representation Cards -->
+                        <div class="pulse-card-wrapper wrap-attendance" id="loginWrapAttendance">
+                            <div class="pulse-login-card card-attendance">
+                                <div class="card-tag">ATTENDANCE</div>
+                                <div class="card-status">
+                                    <span class="status-dot"></span>
+                                    <span class="status-title">Checked in</span>
+                                </div>
+                                <div class="card-sub">Check-in / Check-out</div>
+                            </div>
+                        </div>
+
+                        <div class="pulse-card-wrapper wrap-leave" id="loginWrapLeave">
+                            <div class="pulse-login-card card-leave">
+                                <div class="card-tag">LEAVE</div>
+                                <div class="card-title">Paid Leave</div>
+                                <div class="card-dates">25 Aug → 26 Aug</div>
+                                <div class="card-sub sub-green">✓ Approved</div>
+                            </div>
+                        </div>
+
+                        <div class="pulse-card-wrapper wrap-id" id="loginWrapId">
+                            <div class="pulse-login-card card-id">
+                                <div class="card-tag">EMPLOYEE ID</div>
+                                <div class="card-code">OIJODO20260001</div>
+                                <div class="card-sub sub-green">✓ Automatically generated</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Glass Login Form Container -->
+                    <div class="pulse-login-form-side">
+                        <!-- Soft Ambient Glow Behind Card -->
+                        <div class="pulse-card-ambient-glow"></div>
+
+                        <div class="pulse-login-glass-card" id="pulseLoginCard">
+                            
+                            <!-- Form Header -->
+                            <div class="form-header">
+                                <span class="form-badge">PULSE WORKSPACE</span>
+                                <div class="header-brand-row">
+                                    <img src="/pulse_hr/static/src/img/pulse_logo.png" alt="Pulse Logo" style="width: 24px; height: 24px; border-radius: 6px; object-fit: contain; box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);"/>
+                                    <span class="form-wordmark">PULSE</span>
+                                </div>
+
+                                <!-- TOP WORKSPACE ROLE SWITCHER TABS (ABOVE WELCOME BACK) -->
+                                <div class="pulse-top-role-switcher" role="tablist" aria-label="Select Workspace Role">
+                                    <button type="button" class="pulse-role-tab selected" id="tabEmployee" role="tab" aria-selected="true" data-role="employee">
+                                        <svg class="role-tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
+                                        <div class="role-tab-text">
+                                            <span class="tab-title">Employee</span>
+                                            <span class="tab-sub">Workspace</span>
+                                        </div>
+                                    </button>
+
+                                    <button type="button" class="pulse-role-tab tab-hr" id="tabHr" role="tab" aria-selected="false" data-role="hr">
+                                        <svg class="role-tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                        </svg>
+                                        <div class="role-tab-text">
+                                            <span class="tab-title">HR Officer</span>
+                                            <span class="tab-sub">Workspace</span>
+                                        </div>
+                                    </button>
+                                </div>
+
+                                <h2 class="form-title" id="formTitle">Welcome back.</h2>
+                                <p class="form-subtitle" id="formSubtitle">Log in to your Employee workspace.</p>
+                            </div>
+
+                            <!-- Odoo Authentication Form -->
+                            <form class="oe_login_form pulse-form" id="pulseLoginForm" t-attf-action="/web/login" method="post" novalidate="novalidate" onsubmit="this.action = '/web/login' + location.hash">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="intended_role" id="intendedRoleInput" value="employee"/>
+
+                                <!-- Database Selector (If multiple databases present) -->
+                                <div class="pulse-form-group" t-if="databases and len(databases) &gt; 1">
+                                    <label for="db" class="pulse-label">Database</label>
+                                    <div class="input-inner-wrap">
+                                        <input type="text" name="db" t-att-value="request.db" id="db" class="pulse-input" readonly="readonly"/>
+                                    </div>
+                                </div>
+
+                                <!-- Field 1: Login ID -->
+                                <div class="pulse-form-group field-login" id="loginGroup">
+                                    <label for="login" class="pulse-label" id="loginLabel">Employee Login ID</label>
+                                    <div class="input-inner-wrap">
+                                        <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
+                                        <input type="text" placeholder="Enter your Employee Login ID" name="login" t-att-value="login" id="login" class="pulse-input" autocomplete="username" autofocus="autofocus" autocapitalize="off"/>
+                                    </div>
+                                    <div class="pulse-inline-error" id="loginInlineError" style="display: none;">
+                                        Login ID is required.
+                                    </div>
+                                </div>
+
+                                <!-- Field 2: Password with Show/Hide Toggle -->
+                                <div class="pulse-form-group" id="passwordGroup">
+                                    <label for="password" class="pulse-label">Password</label>
+                                    <div class="input-inner-wrap">
+                                        <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                        </svg>
+                                        <input type="password" placeholder="Enter your password" name="password" id="pulsePasswordInput" class="pulse-input" autocomplete="current-password" t-att-autofocus="'autofocus' if login else None" maxlength="4096"/>
+                                        <button type="button" id="togglePasswordBtn" class="password-toggle-btn" aria-label="Toggle password visibility" title="Show/Hide Password">
+                                            <svg id="eyeIconShow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                            <svg id="eyeIconHide" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                                <line x1="1" y1="1" x2="23" y2="23"></line>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="pulse-inline-error" id="passwordInlineError" style="display: none;">
+                                        Password is required.
+                                    </div>
+                                </div>
+
+                                <!-- Odoo Server Error Alert State -->
+                                <div t-if="error" class="pulse-alert-error" role="alert">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                    </svg>
+                                    <span t-esc="error if error != 'Wrong login/password' else 'Invalid Login ID or password.'"/>
+                                </div>
+
+                                <div t-if="message" class="pulse-alert-success" role="status">
+                                    <span t-esc="message"/>
+                                </div>
+
+                                <!-- Submit Button with Loading State -->
+                                <div class="pulse-submit-row">
+                                    <button type="submit" class="pulse-btn-login" id="pulseSubmitBtn">
+                                        <span id="btnText">Login →</span>
+                                        <span id="btnSpinner" class="pulse-spinner" style="display: none;"></span>
+                                    </button>
+                                </div>
+
+                                <input type="hidden" name="redirect" t-att-value="redirect"/>
+                            </form>
+
+                            <div class="form-footer">
+                                <span class="footer-text">Secure access to Pulse HRMS</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <script src="/pulse_hr/static/src/js/pulse_login.js"></script>
+            </body>
+            </html>
+        </xpath>
+    </template>
+</odoo>

@@ -41,5 +41,61 @@
             <field name="login_id">OIALEM20260002</field>
             <field name="temp_password">Password123!</field>
         </record>
+
+        <!-- 3. Sample Payroll Record for Alex Employee -->
+        <record id="payroll_alex_august" model="pulse.payroll.record">
+            <field name="employee_id" ref="employee_regular_employee"/>
+            <field name="month">August</field>
+            <field name="year">2026</field>
+            <field name="basic_salary">8500.0</field>
+            <field name="allowances">4500.0</field>
+            <field name="overtime_pay">450.0</field>
+            <field name="bonus">500.0</field>
+            <field name="deductions">1200.0</field>
+            <field name="tax">850.0</field>
+            <field name="pf_contribution">1020.0</field>
+            <field name="payment_status">paid</field>
+        </record>
+
+        <!-- 4. Sample Benefits -->
+        <record id="benefit_health" model="pulse.benefit">
+            <field name="benefit_name">Comprehensive Health &amp; Dental</field>
+            <field name="description">Premium health insurance with dental coverage</field>
+            <field name="provider">Pulse Health Network</field>
+            <field name="benefit_type">health</field>
+        </record>
+
+        <record id="emp_benefit_alex" model="pulse.employee.benefit">
+            <field name="employee_id" ref="employee_regular_employee"/>
+            <field name="benefit_id" ref="benefit_health"/>
+            <field name="status">active</field>
+            <field name="coverage_details">Full Premium Coverage ($500,000 max)</field>
+        </record>
+
+        <!-- 5. Sample Document -->
+        <record id="doc_alex_contract" model="pulse.employee.document">
+            <field name="employee_id" ref="employee_regular_employee"/>
+            <field name="document_name">Employment Agreement 2026.pdf</field>
+            <field name="file_type">PDF</field>
+            <field name="file_size">1.4 MB</field>
+            <field name="status">verified</field>
+        </record>
+
+        <!-- 6. Sample Notifications -->
+        <record id="notif_alex_1" model="pulse.notification">
+            <field name="employee_id" ref="employee_regular_employee"/>
+            <field name="title">Paid Leave Approved</field>
+            <field name="message">Your leave request for Aug 25 - Aug 26 has been approved by HR.</field>
+            <field name="notification_type">success</field>
+            <field name="is_read">0</field>
+        </record>
+
+        <record id="notif_alex_2" model="pulse.notification">
+            <field name="employee_id" ref="employee_regular_employee"/>
+            <field name="title">August Payslip Ready</field>
+            <field name="message">Your monthly payslip for August 2026 is now available for download.</field>
+            <field name="notification_type">info</field>
+            <field name="is_read">0</field>
+        </record>
     </data>
 </odoo>
