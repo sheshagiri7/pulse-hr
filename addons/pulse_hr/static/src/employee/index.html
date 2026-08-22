@@ -3202,6 +3202,16 @@
             .then((res) => res.json())
             .then((data) => {
               if (data && data.result && data.result.length > 0) {
+                const defaultAvatarsList = [
+                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+                  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
+                  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80',
+                  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
+                  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&auto=format&fit=crop&q=80',
+                  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&auto=format&fit=crop&q=80',
+                  'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80',
+                  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&auto=format&fit=crop&q=80'
+                ];
                 const fetched = data.result.map((emp, index) => ({
                   id: emp.login_id || `EMP-${emp.id}`,
                   db_id: emp.id,
@@ -3215,7 +3225,7 @@
                   goalProgress: 95,
                   extraHours: '+24.0h',
                   absentDays: 0,
-                  avatarUrl: `https://images.unsplash.com/photo-${1534528741775 + (index * 100)}?w=200&auto=format&fit=crop&q=80`,
+                  avatarUrl: defaultAvatarsList[index % defaultAvatarsList.length],
                   email: emp.work_email || 'employee@pulse.ai',
                   isSelf: index === 0
                 }));
@@ -3429,13 +3439,19 @@
                       {/* Member Header */}
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-xl overflow-hidden ring-2 ring-zinc-700 bg-zinc-800 flex-shrink-0">
-                            <img 
-                              src={member.avatarUrl} 
-                              alt={member.name} 
-                              className="w-full h-full object-cover"
-                              referrerPolicy="no-referrer"
-                            />
+                          <div className="w-12 h-12 rounded-xl overflow-hidden ring-2 ring-zinc-700 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 flex items-center justify-center flex-shrink-0 shadow-md relative">
+                            {member.avatarUrl && (
+                              <img 
+                                src={member.avatarUrl} 
+                                alt={member.name} 
+                                className="w-full h-full object-cover relative z-10"
+                                onError={(e) => { e.target.style.display = 'none'; }}
+                                referrerPolicy="no-referrer"
+                              />
+                            )}
+                            <span className="font-bold text-white text-xs tracking-wider font-mono absolute">
+                              {member.name ? member.name.replace(/ \(You\)/g, '').split(' ').map(n=>n[0]).join('') : 'P'}
+                            </span>
                           </div>
                           <div>
                             <div className="flex items-center gap-1.5">
@@ -3476,17 +3492,10 @@
                       </div>
                     </div>
 
-                    {/* Member Footer Actions */}
+                    {/* Member Footer */}
                     <div className="flex items-center justify-between pt-3 mt-4 border-t border-zinc-800/60 text-xs font-mono">
                       <span className="text-zinc-500 text-[11px]">Division: System Engineering</span>
-                      <div className="flex items-center gap-1.5">
-                        <button
-                          onClick={() => alert(`Opening direct communication link with ${member.name}...`)}
-                          className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 hover:border-white text-zinc-300 hover:text-white text-[10px] font-bold transition-all cursor-pointer"
-                        >
-                          Ping 💬
-                        </button>
-                      </div>
+                      <span className="text-emerald-400/80 text-[10px] font-bold">● Active Telemetry</span>
                     </div>
                   </div>
                 ))}
