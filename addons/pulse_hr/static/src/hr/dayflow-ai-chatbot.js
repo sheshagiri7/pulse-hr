@@ -31,7 +31,7 @@
             <div class="dayflow-ai-title flex items-center gap-2">PULSE AI Copilot <span style="font-size: 10px; background: rgba(66,225,141,0.2); color: #42e18d; padding: 1px 6px; border-radius: 4px; font-family: monospace;">GPT-4o Synced</span></div>
             <div class="dayflow-ai-subtitle">
               <span class="dayflow-ai-status-dot"></span>
-              Personnel Context: HR Officer (Pulse) (0IHRHR20260001)
+              Personnel Context: Yokesh V. (EMP-9402)
             </div>
           </div>
         </div>
