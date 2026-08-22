@@ -1,0 +1,486 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Dayflow HRMS - Admin Account & Security Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/pulse_hr/static/src/hr/dayflow-ai-chatbot.css">
+<link rel="stylesheet" href="/pulse_hr/static/src/hr/dayflow-header-controls.css">
+<script src="/pulse_hr/static/src/hr/dayflow-ai-chatbot.js" defer></script>
+<script src="/pulse_hr/static/src/hr/dayflow-header-controls.js" defer></script>
+<script src="/pulse_hr/static/src/hr/dayflow-page-actions.js" defer></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2878FF",
+                        "secondary": "#8B45F7",
+                        "tertiary": "#42e18d",
+                        "error": "#ffb4ab",
+                        "surface-navy": "#0a0f24",
+                        "surface-container": "#151a30",
+                        "surface-container-low": "#101528",
+                        "on-surface": "#ffffff",
+                        "on-surface-variant": "#c2c6d7",
+                        "rim-light": "rgba(255,255,255,0.1)"
+                    }
+                }
+            }
+        }
+</script>
+<style>
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #050817;
+    color: #ffffff;
+  }
+  .glass-card {
+    background: rgba(21, 26, 48, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #2878FF, #8B45F7);
+    box-shadow: 0 4px 15px rgba(40, 120, 255, 0.3);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(139, 69, 247, 0.5);
+  }
+</style>
+
+    <!-- Official Pulse Favicon -->
+    <link rel="icon" type="image/png" href="/pulse_hr/static/src/img/pulse_logo.png"/>
+    <link rel="shortcut icon" type="image/png" href="/pulse_hr/static/src/img/pulse_logo.png"/>
+    <link rel="apple-touch-icon" href="/pulse_hr/static/src/img/pulse_logo.png"/>
+    <link rel="stylesheet" href="/pulse_hr/static/src/css/pulse_design_system.css"/>
+
+</head>
+<body class="bg-[#050817] text-white flex min-h-screen">
+<!-- Sidebar -->
+<aside class="w-64 bg-surface-container-low border-r border-rim-light flex flex-col justify-between p-4 shrink-0 z-20">
+  <div class="space-y-6">
+    <!-- Brand -->
+    <div class="flex items-center gap-3 px-2">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold shadow-lg shadow-primary/30">
+        <span class="material-symbols-outlined">dataset</span>
+      </div>
+      <div>
+        <h1 class="font-bold text-lg leading-none">PuLse</h1>
+        <span class="text-[10px] text-on-surface-variant tracking-widest uppercase">ENTERPRISE HQ</span>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="space-y-1">
+      <a href="/hr/dashboard" class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-white hover:bg-white/5 transition-colors">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="text-sm font-semibold">Dashboard</span>
+      </a>
+      <a href="/hr/employees" class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-white hover:bg-white/5 transition-colors">
+        <span class="material-symbols-outlined">group</span>
+        <span class="text-sm font-semibold">Employees</span>
+      </a>
+      <a href="/hr/attendance" class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-white hover:bg-white/5 transition-colors">
+        <span class="material-symbols-outlined">event_available</span>
+        <span class="text-sm font-semibold">Attendance</span>
+      </a>
+      <a href="/hr/leaves" class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-white hover:bg-white/5 transition-colors">
+        <span class="material-symbols-outlined">holiday_village</span>
+        <span class="text-sm font-semibold">Leave Requests</span>
+      </a>
+      <a href="/hr/payroll" class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-white hover:bg-white/5 transition-colors">
+        <span class="material-symbols-outlined">payments</span>
+        <span class="text-sm font-semibold">Payroll</span>
+      </a>
+
+    </nav>
+  </div>
+
+  <!-- Logout Footer -->
+  <div class="pt-4 border-t border-rim-light">
+    <a href="/web/login" class="flex items-center gap-3 px-4 py-3 rounded-lg text-error hover:bg-error/10 transition-colors">
+      <span class="material-symbols-outlined">logout</span>
+      <span class="text-sm font-semibold">Logout</span>
+    </a>
+  </div>
+</aside>
+
+<!-- Main Container -->
+<div class="flex-1 flex flex-col min-w-0">
+  <!-- Top App Bar -->
+  <header class="h-20 border-b border-rim-light px-8 flex items-center justify-between bg-surface-navy/60 backdrop-blur-md sticky top-0 z-30">
+    <div class="flex items-center gap-4">
+      <h2 class="text-xl font-bold text-white">Admin Account & Security Profile</h2>
+    </div>
+
+    <div class="flex items-center gap-6">
+      <!-- Search -->
+      <div class="relative hidden sm:block">
+        <span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-sm">search</span>
+        <input type="text" placeholder="Search account settings..." class="bg-surface-container border border-rim-light rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-on-surface-variant focus:outline-none focus:border-primary w-64"/>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex items-center gap-2">
+        <button class="dayflow-header-btn" title="Notifications">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="dayflow-header-badge"></span>
+        </button>
+
+        <button class="dayflow-header-btn" title="Settings">
+          <span class="material-symbols-outlined">settings</span>
+        </button>
+
+        <div class="h-6 w-px bg-rim-light mx-1"></div>
+
+        <!-- Profile Link -->
+        <a href="/hr/account" class="dayflow-header-profile">
+          <div class="text-right hidden md:block">
+            <p class="text-sm font-bold leading-tight">Admin Profile</p>
+            <p class="text-[11px] text-secondary font-semibold">Superuser</p>
+          </div>
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Admin Avatar"/>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <main class="p-8 flex-1 overflow-y-auto space-y-8 relative z-10">
+    <!-- Admin Identity Banner Card -->
+    <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-secondary/10 to-transparent pointer-events-none"></div>
+      <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-6">
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Admin Avatar" class="w-24 h-24 rounded-full object-cover border-4 border-primary/50 shadow-2xl shadow-primary/30"/>
+            <span class="absolute bottom-1 right-1 w-5 h-5 bg-tertiary border-2 border-surface-navy rounded-full shadow-lg" title="Active Online"></span>
+          </div>
+          <div>
+            <div class="flex items-center gap-3">
+              <h3 class="text-2xl font-bold text-white">Admin Officer</h3>
+              <span class="px-3 py-1 rounded-full bg-secondary/20 border border-secondary/40 text-secondary text-xs font-bold uppercase tracking-wider">Superuser</span>
+            </div>
+            <p class="text-sm text-on-surface-variant mt-1">HR Operations Director & Enterprise Administrator</p>
+            <div class="flex flex-wrap gap-4 mt-3 text-xs text-on-surface-variant">
+              <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-primary">mail</span> admin.officer@dayflow.ai</span>
+              <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-secondary">badge</span> ID: ADM-2026-901</span>
+              <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-tertiary">location_on</span> Executive HQ (SF, USA)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 w-full md:w-auto">
+          <button id="openEditProfileBtn" onclick="openEditProfileModal()" class="btn-primary px-5 py-2.5 rounded-lg text-sm font-bold text-white flex items-center justify-center gap-2 w-full md:w-auto transition-transform active:scale-95 cursor-pointer">
+            <span class="material-symbols-outlined text-sm">edit</span> Edit Profile
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security & Settings Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Security & Password -->
+      <div class="glass-card rounded-2xl p-6 space-y-6">
+        <div class="flex items-center justify-between border-b border-rim-light pb-4">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">lock</span>
+            <h3 class="text-lg font-bold text-white">Security & Password</h3>
+          </div>
+          <span class="text-xs text-tertiary font-bold flex items-center gap-1"><span class="material-symbols-outlined text-xs">verified_user</span> 2FA Protected</span>
+        </div>
+
+        <form onsubmit="alert('Password updated successfully.'); return false;" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-on-surface-variant mb-1">Current Password</label>
+            <input type="password" value="••••••••••••" class="w-full bg-surface-container border border-rim-light rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary"/>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-on-surface-variant mb-1">New Password</label>
+              <input type="password" placeholder="Enter new password" class="w-full bg-surface-container border border-rim-light rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary"/>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-on-surface-variant mb-1">Confirm Password</label>
+              <input type="password" placeholder="Confirm password" class="w-full bg-surface-container border border-rim-light rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary"/>
+            </div>
+          </div>
+
+          <div class="pt-2 flex justify-end">
+            <button type="submit" class="bg-primary/20 border border-primary/40 hover:bg-primary/30 text-primary text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-lg transition-colors">
+              Update Password
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Active Login Sessions -->
+      <div class="glass-card rounded-2xl p-6 space-y-6">
+        <div class="flex items-center justify-between border-b border-rim-light pb-4">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary">devices</span>
+            <h3 class="text-lg font-bold text-white">Active Login Sessions</h3>
+          </div>
+          <button onclick="terminateAllOtherSessions()" class="text-xs text-error hover:underline font-semibold cursor-pointer">Terminate All</button>
+        </div>
+
+        <div class="space-y-3">
+          <div class="bg-surface-container/60 border border-primary/30 rounded-xl p-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                <span class="material-symbols-outlined">laptop_mac</span>
+              </div>
+              <div>
+                <p class="text-sm font-bold text-white">macOS Sonoma • Chrome Browser</p>
+                <p class="text-xs text-on-surface-variant">San Francisco, CA • 192.168.1.102</p>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded bg-tertiary/15 border border-tertiary/30 text-tertiary text-[10px] font-bold uppercase">Current Session</span>
+          </div>
+
+          <div class="bg-surface-container/40 border border-rim-light rounded-xl p-4 flex items-center justify-between transition-all">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-secondary/10 text-secondary flex items-center justify-center">
+                <span class="material-symbols-outlined">smartphone</span>
+              </div>
+              <div>
+                <p class="text-sm font-bold text-white">iPhone 15 Pro • Dayflow App</p>
+                <p class="text-xs text-on-surface-variant">Austin, TX • 10.0.4.18</p>
+              </div>
+            </div>
+            <button onclick="revokeSession(this)" class="text-xs text-on-surface-variant hover:text-error cursor-pointer">Revoke</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- System Roles & Audit Trail -->
+    <div class="glass-card rounded-2xl p-6 space-y-6">
+      <div class="flex items-center justify-between border-b border-rim-light pb-4">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-tertiary">history</span>
+          <h3 class="text-lg font-bold text-white">Superuser Audit Trail</h3>
+        </div>
+        <span class="text-xs text-on-surface-variant">Showing last 4 security actions</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead>
+            <tr class="border-b border-rim-light text-on-surface-variant text-xs uppercase tracking-wider">
+              <th class="pb-3">Timestamp</th>
+              <th class="pb-3">Action</th>
+              <th class="pb-3">Target Module</th>
+              <th class="pb-3">IP Address</th>
+              <th class="pb-3 text-right">Status</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-rim-light/50">
+            <tr>
+              <td class="py-3 text-xs text-on-surface-variant">2026-08-22 11:42 AM</td>
+              <td class="py-3 font-semibold text-white">Approved Leave Request (LV-8901)</td>
+              <td class="py-3 text-xs text-secondary font-bold">Leave Intelligence</td>
+              <td class="py-3 text-xs text-on-surface-variant font-mono">192.168.1.102</td>
+              <td class="py-3 text-right"><span class="text-tertiary font-bold text-xs">SUCCESS</span></td>
+            </tr>
+            <tr>
+              <td class="py-3 text-xs text-on-surface-variant">2026-08-22 10:15 AM</td>
+              <td class="py-3 font-semibold text-white">Executed Payroll Tax Audit Scan</td>
+              <td class="py-3 text-xs text-primary font-bold">Payroll Intelligence</td>
+              <td class="py-3 text-xs text-on-surface-variant font-mono">192.168.1.102</td>
+              <td class="py-3 text-right"><span class="text-tertiary font-bold text-xs">SUCCESS</span></td>
+            </tr>
+            <tr>
+              <td class="py-3 text-xs text-on-surface-variant">2026-08-22 08:45 AM</td>
+              <td class="py-3 font-semibold text-white">Superuser Login Authenticated</td>
+              <td class="py-3 text-xs text-tertiary font-bold">Admin Portal</td>
+              <td class="py-3 text-xs text-on-surface-variant font-mono">192.168.1.102</td>
+              <td class="py-3 text-right"><span class="text-tertiary font-bold text-xs">SUCCESS</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- 3D Three.js Background -->
+<div id="threejs-bg-container" class="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-40"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<script>
+(function() {
+  const container = document.getElementById('threejs-bg-container');
+  if(!container) return;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+  camera.position.z = 5;
+
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+  scene.add(ambientLight);
+  const pointLight = new THREE.PointLight(0x2878FF, 2, 50);
+  pointLight.position.set(5, 5, 5);
+  scene.add(pointLight);
+
+  const coreGeo = new THREE.IcosahedronGeometry(2, 3);
+  const coreMat = new THREE.MeshPhongMaterial({
+    color: 0x2878FF,
+    transparent: true,
+    opacity: 0.15,
+    wireframe: true,
+    emissive: 0x2878FF,
+    emissiveIntensity: 0.4
+  });
+  const core = new THREE.Mesh(coreGeo, coreMat);
+  scene.add(core);
+
+  const nodes = [];
+  for(let i = 0; i < 12; i++) {
+    const nodeGeo = new THREE.OctahedronGeometry(0.18, 0);
+    const nodeMat = new THREE.MeshPhongMaterial({
+      color: 0x8B45F7,
+      emissive: 0x8B45F7,
+      emissiveIntensity: 0.8
+    });
+    const node = new THREE.Mesh(nodeGeo, nodeMat);
+    const angle = (i / 12) * Math.PI * 2;
+    const radius = 2.4 + Math.random() * 0.5;
+    node.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius, (Math.random() - 0.5) * 2);
+    node.userData = { angle, radius, speed: 0.008 + Math.random() * 0.008 };
+    scene.add(node);
+    nodes.push(node);
+  }
+
+  const partCount = 200;
+  const partGeo = new THREE.BufferGeometry();
+  const partPos = new Float32Array(partCount * 3);
+  for(let i = 0; i < partCount * 3; i++) partPos[i] = (Math.random() - 0.5) * 16;
+  partGeo.setAttribute('position', new THREE.BufferAttribute(partPos, 3));
+  const partMat = new THREE.PointsMaterial({ size: 0.035, color: 0x42e18d, transparent: true, opacity: 0.5 });
+  const particles = new THREE.Points(partGeo, partMat);
+  scene.add(particles);
+
+  function animate() {
+    requestAnimationFrame(animate);
+    core.rotation.x += 0.003;
+    core.rotation.y += 0.005;
+    particles.rotation.y += 0.001;
+
+    nodes.forEach(node => {
+      node.userData.angle += node.userData.speed;
+      node.position.x = Math.cos(node.userData.angle) * node.userData.radius;
+      node.position.y = Math.sin(node.userData.angle) * node.userData.radius;
+      node.rotation.x += 0.02;
+    });
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+})();
+</script>
+
+<!-- Edit Admin Profile Modal -->
+<div id="dayflowEditProfileModal" class="dayflow-settings-backdrop" style="z-index: 9997;">
+  <div style="position: relative; width: 480px; max-width: 90vw; margin: 80px auto; background: rgba(10, 16, 36, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(40, 120, 255, 0.4); border-radius: 20px; padding: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.8); color: #fff;">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 14px; margin-bottom: 16px;">
+      <h3 style="font-size: 16px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px;">
+        <span class="material-symbols-outlined" style="color: #2878FF;">manage_accounts</span> Edit Admin Profile
+      </h3>
+      <button onclick="closeEditProfileModal()" style="background: transparent; border: none; color: #c2c6d7; cursor: pointer;">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <form id="editProfileForm" style="display: flex; flex-direction: column; gap: 14px;">
+      <div>
+        <label style="display: block; font-size: 12px; font-weight: 600; color: #c2c6d7; margin-bottom: 4px;">Full Name</label>
+        <input type="text" id="editAdminName" value="Admin Officer" required style="width: 100%; background: rgba(21, 26, 48, 0.8); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 12px; color: #fff; font-size: 13px; outline: none;"/>
+      </div>
+
+      <div>
+        <label style="display: block; font-size: 12px; font-weight: 600; color: #c2c6d7; margin-bottom: 4px;">Email Address</label>
+        <input type="email" id="editAdminEmail" value="admin.officer@dayflow.ai" required style="width: 100%; background: rgba(21, 26, 48, 0.8); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 12px; color: #fff; font-size: 13px; outline: none;"/>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div>
+          <label style="display: block; font-size: 12px; font-weight: 600; color: #c2c6d7; margin-bottom: 4px;">Title / Role</label>
+          <input type="text" id="editAdminRole" value="HR Operations Director" style="width: 100%; background: rgba(21, 26, 48, 0.8); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 12px; color: #fff; font-size: 13px; outline: none;"/>
+        </div>
+        <div>
+          <label style="display: block; font-size: 12px; font-weight: 600; color: #c2c6d7; margin-bottom: 4px;">Location</label>
+          <input type="text" id="editAdminLoc" value="Executive HQ (SF, USA)" style="width: 100%; background: rgba(21, 26, 48, 0.8); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 12px; color: #fff; font-size: 13px; outline: none;"/>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
+        <button type="button" onclick="closeEditProfileModal()" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #c2c6d7; padding: 8px 16px; border-radius: 8px; font-size: 12px; cursor: pointer;">Cancel</button>
+        <button type="submit" style="background: linear-gradient(135deg, #2878FF, #8B45F7); border: none; color: #fff; padding: 8px 20px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer;">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+function openEditProfileModal() {
+  document.getElementById('dayflowEditProfileModal').classList.add('open');
+}
+function closeEditProfileModal() {
+  document.getElementById('dayflowEditProfileModal').classList.remove('open');
+}
+
+document.getElementById('editProfileForm')?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('editAdminName').value;
+  const email = document.getElementById('editAdminEmail').value;
+  const role = document.getElementById('editAdminRole').value;
+
+  const h3 = document.querySelector('main h3.text-2xl');
+  if (h3) h3.textContent = name;
+
+  const roleP = document.querySelector('main p.text-sm.text-on-surface-variant');
+  if (roleP) roleP.textContent = role + ' & Enterprise Administrator';
+
+  closeEditProfileModal();
+  alert('Admin Profile updated successfully!');
+});
+
+function revokeSession(btn) {
+  const row = btn.closest('div');
+  if (row) {
+    row.style.transition = 'all 0.3s ease';
+    row.style.opacity = '0';
+    row.style.transform = 'translateX(20px)';
+    setTimeout(() => row.remove(), 300);
+  }
+}
+
+function terminateAllOtherSessions() {
+  document.querySelectorAll('button').forEach(btn => {
+    if (btn.textContent.trim() === 'Revoke') {
+      revokeSession(btn);
+    }
+  });
+  alert('Terminated all remote active login sessions.');
+}
+</script>
+</body></html>

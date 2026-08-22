@@ -254,8 +254,46 @@
                                 </div>
 
                                 <!-- TOP WORKSPACE ROLE SWITCHER TABS (ABOVE WELCOME BACK) -->
+                                <script>
+                                    function selectPulseRole(role) {
+                                        var input = document.getElementById('intendedRoleInput');
+                                        var tabEmp = document.getElementById('tabEmployee');
+                                        var tabHr = document.getElementById('tabHr');
+                                        var sub = document.getElementById('formSubtitle');
+                                        var lbl = document.getElementById('loginLabel');
+                                        var inp = document.getElementById('login');
+
+                                        if (input) input.value = role;
+
+                                        if (role === 'hr') {
+                                            if (tabHr) {
+                                                tabHr.classList.add('selected');
+                                                tabHr.setAttribute('aria-selected', 'true');
+                                            }
+                                            if (tabEmp) {
+                                                tabEmp.classList.remove('selected');
+                                                tabEmp.setAttribute('aria-selected', 'false');
+                                            }
+                                            if (sub) sub.innerText = 'Log in to your HR Officer workspace.';
+                                            if (lbl) lbl.innerText = 'HR Officer Login ID';
+                                            if (inp) inp.placeholder = 'Enter your HR Officer Login ID';
+                                        } else {
+                                            if (tabEmp) {
+                                                tabEmp.classList.add('selected');
+                                                tabEmp.setAttribute('aria-selected', 'true');
+                                            }
+                                            if (tabHr) {
+                                                tabHr.classList.remove('selected');
+                                                tabHr.setAttribute('aria-selected', 'false');
+                                            }
+                                            if (sub) sub.innerText = 'Log in to your Employee workspace.';
+                                            if (lbl) lbl.innerText = 'Employee Login ID';
+                                            if (inp) inp.placeholder = 'Enter your Employee Login ID';
+                                        }
+                                    }
+                                </script>
                                 <div class="pulse-top-role-switcher" role="tablist" aria-label="Select Workspace Role">
-                                    <button type="button" class="pulse-role-tab selected" id="tabEmployee" role="tab" aria-selected="true" data-role="employee">
+                                    <button type="button" class="pulse-role-tab selected" id="tabEmployee" role="tab" aria-selected="true" data-role="employee" onclick="selectPulseRole('employee')">
                                         <svg class="role-tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                             <circle cx="12" cy="7" r="4"></circle>
@@ -266,7 +304,7 @@
                                         </div>
                                     </button>
 
-                                    <button type="button" class="pulse-role-tab tab-hr" id="tabHr" role="tab" aria-selected="false" data-role="hr">
+                                    <button type="button" class="pulse-role-tab tab-hr" id="tabHr" role="tab" aria-selected="false" data-role="hr" onclick="selectPulseRole('hr')">
                                         <svg class="role-tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                                         </svg>

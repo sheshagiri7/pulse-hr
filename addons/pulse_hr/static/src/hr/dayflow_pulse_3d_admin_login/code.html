@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DAYFLOW PULSE - Admin Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#0f1322",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-high": "#26293a",
+                        "secondary-fixed-dim": "#d5bbff",
+                        "secondary-fixed": "#ebdcff",
+                        "surface-container-lowest": "#0a0d1d",
+                        "error-container": "#93000a",
+                        "on-surface-variant": "#c2c6d7",
+                        "on-surface": "#dfe1f7",
+                        "primary": "#b0c6ff",
+                        "secondary-container": "#6603d2",
+                        "on-primary": "#002d6f",
+                        "on-tertiary-fixed": "#151b2f",
+                        "error": "#ffb4ab",
+                        "inverse-primary": "#0058cb",
+                        "on-tertiary": "#2a2f45",
+                        "tertiary-container": "#8a90a9",
+                        "secondary": "#d5bbff",
+                        "surface-container-low": "#171b2b",
+                        "tertiary-fixed": "#dce1fe",
+                        "on-secondary-fixed": "#270058",
+                        "on-background": "#dfe1f7",
+                        "on-primary-fixed": "#001945",
+                        "primary-fixed-dim": "#b0c6ff",
+                        "on-tertiary-container": "#23293e",
+                        "primary-fixed": "#d9e2ff",
+                        "on-secondary-container": "#ceb2ff",
+                        "surface-bright": "#353849",
+                        "inverse-surface": "#dfe1f7",
+                        "on-secondary-fixed-variant": "#5d00c2",
+                        "primary-container": "#568dff",
+                        "on-secondary": "#41008b",
+                        "on-primary-fixed-variant": "#00429b",
+                        "on-tertiary-fixed-variant": "#40465c",
+                        "surface-tint": "#b0c6ff",
+                        "on-primary-container": "#002661",
+                        "on-error": "#690005",
+                        "inverse-on-surface": "#2c3040",
+                        "surface": "#0f1322",
+                        "surface-container-highest": "#303445",
+                        "outline-variant": "#424655",
+                        "tertiary": "#c0c5e1",
+                        "surface-variant": "#303445",
+                        "outline": "#8c90a0",
+                        "surface-dim": "#0f1322",
+                        "surface-container": "#1b1f2f",
+                        "tertiary-fixed-dim": "#c0c5e1",
+                        "brand-navy": "#050817",
+                        "brand-blue": "#2878FF",
+                        "brand-violet": "#8B45F7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "container-padding-desktop": "40px",
+                        "depth-z-index-overlay": "500",
+                        "depth-z-index-raised": "100",
+                        "container-padding-mobile": "20px",
+                        "depth-z-index-base": "0"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "display-lg-mobile": ["Plus Jakarta Sans"],
+                        "data-mono": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "data-mono": ["14px", { "lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .bg-mesh {
+            background-color: #050817;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(40, 120, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 69, 247, 0.15) 0px, transparent 50%);
+        }
+        .glass-panel {
+            background: rgba(10, 16, 36, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(176, 198, 255, 0.1);
+            border-top: 1px solid rgba(176, 198, 255, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .glow-button {
+            position: relative;
+            background: rgba(40, 120, 255, 0.2);
+            border: 1px solid rgba(40, 120, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        .glow-button:hover {
+            background: rgba(40, 120, 255, 0.4);
+            box-shadow: 0 0 20px rgba(40, 120, 255, 0.4);
+        }
+        .pulse-orb {
+            animation: pulse-glow 3s infinite alternate;
+        }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 10px rgba(40, 120, 255, 0.5), inset 0 0 10px rgba(139, 69, 247, 0.5); }
+            100% { box-shadow: 0 0 30px rgba(40, 120, 255, 0.8), inset 0 0 20px rgba(139, 69, 247, 0.8); }
+        }
+        
+        /* Floating animations for UI objects */
+        .float-1 { animation: float 6s ease-in-out infinite; }
+        .float-2 { animation: float 8s ease-in-out infinite reverse; }
+        .float-3 { animation: float 7s ease-in-out infinite 1s; }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen overflow-hidden selection:bg-brand-blue/30 selection:text-white">
+<!-- Cinematic 3D Background Environment -->
+<div class="fixed inset-0 z-0 bg-mesh overflow-hidden">
+<!-- Abstract Cityscape / Data Network Image -->
+<div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-screen scale-105 transform origin-center transition-transform duration-[10000ms] ease-linear hover:scale-110" data-alt="A cinematic, high-end 3D rendering of a futuristic cityscape at night viewed through floor-to-ceiling glass windows. Luminous data lines and glowing network nodes connect abstract geometric structures. The scene is illuminated by electric blue and deep violet atmospheric lighting, creating a sophisticated, high-tech corporate intelligence environment. Depth of field effect blurs the background slightly, emphasizing a vast, layered virtual space." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB-bNReQrC0rFvR3SipSW1Op9BtndcDcq1s0vQce4pAbJDiJWks0mWvLGQfFRCzGP8aIVUnrW2b5jTEJgE7CTjWNQIJIlivF6UBLGrLJWKsmgwjOUik441xptvtLq3GPCS13_qFHSLm5LlFdOyCI8zY8PD3tyDEBorH_ki7IXgaZmL0yM5Puo_2pjLH1rQqfe_Ooatg90TwtjevJOvmBH6BsZPNHYf_xkhjbcUzRFfy64Ml0kg1HL6TsA')"></div>
+<!-- Connecting Luminous Lines (CSS simulated) -->
+<svg class="absolute inset-0 w-full h-full opacity-20 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+<path class="opacity-50" d="M100 200 Q 300 100, 500 400 T 900 300" fill="none" stroke="#2878FF" stroke-width="1"></path>
+<path class="opacity-50" d="M200 600 Q 400 400, 600 500 T 1000 200" fill="none" stroke="#8B45F7" stroke-width="1"></path>
+</svg>
+</div>
+<!-- Main Layout -->
+<main class="relative z-10 w-full min-h-screen flex flex-col lg:flex-row">
+<!-- Left Side: Intelligence Environment -->
+<div class="hidden lg:flex flex-col justify-between w-full lg:w-3/5 p-container-padding-desktop">
+<!-- Brand -->
+<div class="flex items-center space-x-3 mb-12">
+<div class="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-blue to-brand-violet flex items-center justify-center shadow-[0_0_15px_rgba(40,120,255,0.4)]">
+<span class="font-display-lg text-white text-2xl tracking-tighter">D</span>
+</div>
+<div>
+<h1 class="font-display-lg text-xl tracking-widest text-primary">DAYFLOW</h1>
+<span class="font-label-caps text-on-surface-variant opacity-70">HRMS</span>
+</div>
+</div>
+<!-- Hero Content & Floating UI -->
+<div class="relative flex-1 flex flex-col justify-center max-w-2xl">
+<!-- Signature 3D Core Placeholder -->
+<div class="absolute -top-12 -left-12 w-32 h-32 rounded-full pulse-orb opacity-60 blur-md bg-gradient-to-tr from-brand-blue/40 to-brand-violet/40"></div>
+<h2 class="font-display-lg text-display-lg mb-6 leading-tight text-white drop-shadow-lg">
+                    Empower Teams.<br/>Streamline HR.<br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-violet">Every Workday, Perfectly Aligned.</span>
+</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl border-l-2 border-brand-blue/30 pl-4">
+                    Dayflow brings workforce data, attendance, leave, payroll and HR intelligence into one powerful command center.
+                </p>
+<!-- 3D Holographic Floating Widgets -->
+<div class="absolute right-0 top-1/4 w-full h-full pointer-events-none">
+<!-- Widget 1: Employees -->
+<div class="absolute right-20 top-10 glass-panel p-4 rounded-xl float-1">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-brand-blue" style="font-variation-settings: 'FILL' 1;">groups</span>
+<div>
+<div class="font-label-caps text-on-surface-variant">EMPLOYEE NODE</div>
+<div class="font-headline-md text-white">248</div>
+</div>
+</div>
+</div>
+<!-- Widget 2: Attendance -->
+<div class="absolute right-40 top-1/3 glass-panel p-4 rounded-xl float-2">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-green-400">check_circle</span>
+<div>
+<div class="font-label-caps text-on-surface-variant">ATTENDANCE</div>
+<div class="font-headline-md text-white">91%</div>
+</div>
+</div>
+</div>
+<!-- Widget 3: Payroll -->
+<div class="absolute right-10 top-2/3 glass-panel p-4 rounded-xl float-3">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-brand-violet">payments</span>
+<div>
+<div class="font-label-caps text-on-surface-variant">PAYROLL</div>
+<div class="font-headline-md text-white">₹24.8L</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Philosophy -->
+<div class="mt-12 font-data-mono text-data-mono text-on-surface-variant opacity-60 tracking-widest">
+                AI ASSISTS. EVIDENCE EXPLAINS. HUMANS DECIDE.
+            </div>
+</div>
+<!-- Right Side: Login Panel -->
+<div class="w-full lg:w-2/5 flex items-center justify-center p-container-padding-mobile lg:p-container-padding-desktop">
+<div class="w-full max-w-md glass-panel rounded-2xl p-8 lg:p-10 relative overflow-hidden transform transition-all hover:scale-[1.01] duration-500">
+<!-- Inner ambient glow -->
+<div class="absolute -top-20 -right-20 w-40 h-40 bg-brand-blue/20 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-20 -left-20 w-40 h-40 bg-brand-violet/20 rounded-full blur-3xl"></div>
+<div class="relative z-10">
+<!-- Security Header -->
+<div class="text-center mb-10">
+<div class="mx-auto w-16 h-16 rounded-full glass-panel flex items-center justify-center mb-4 border border-brand-blue/30 shadow-[0_0_20px_rgba(40,120,255,0.2)]">
+<span class="material-symbols-outlined text-brand-blue text-3xl" style="font-variation-settings: 'FILL' 1;">shield_person</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-white mb-2">Command Center Access</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Authenticate to enter DAYFLOW PULSE.</p>
+</div>
+<!-- Form -->
+<form id="loginForm" class="space-y-6" onsubmit="handleLogin(event)">
+<!-- Email Field -->
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant flex items-center" for="email">
+<span class="w-1.5 h-1.5 rounded-full bg-brand-blue mr-2"></span> Email Node
+                            </label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50">mail</span>
+<input class="w-full bg-surface-container-highest/50 border border-outline-variant/30 rounded-lg py-3 pl-10 pr-4 font-body-md text-white focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all outline-none" id="email" placeholder="Enter your email" type="email" value="admin@dayflow.com"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps text-on-surface-variant flex items-center" for="password">
+<span class="w-1.5 h-1.5 rounded-full bg-brand-violet mr-2"></span> Security Key
+                                </label>
+<a class="font-label-caps text-[10px] text-brand-blue hover:text-white transition-colors" href="#">RESET ACCESS</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50">key</span>
+<input class="w-full bg-surface-container-highest/80 border border-outline-variant/20 rounded-lg py-3 pl-10 pr-10 font-body-md text-white focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all outline-none shadow-inner" id="password" placeholder="Enter password" type="password" value="••••••••"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 hover:text-white transition-colors" type="button">
+<span class="material-symbols-outlined text-sm">visibility</span>
+</button>
+</div>
+</div>
+<!-- Submit Button -->
+<button id="loginBtn" class="w-full glow-button rounded-lg py-4 mt-8 flex items-center justify-center space-x-2 group cursor-pointer" type="submit">
+<span id="loginBtnText" class="font-label-caps text-sm text-white font-bold tracking-widest">SIGN IN</span>
+<span class="material-symbols-outlined text-white text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</form>
+
+<script>
+function handleLogin(e) {
+  e.preventDefault();
+  const btnText = document.getElementById('loginBtnText');
+  btnText.innerText = 'AUTHENTICATING...';
+  
+  fetch('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: document.getElementById('email').value,
+      password: document.getElementById('password').value
+    })
+  }).then(r => r.json()).then(data => {
+    btnText.innerText = 'ACCESS GRANTED';
+    setTimeout(() => {
+      window.location.href = '/dashboard';
+    }, 400);
+  }).catch(() => {
+    window.location.href = '/dashboard';
+  });
+}
+</script>
+<!-- Mobile Footer Fallback -->
+<div class="mt-8 text-center lg:hidden font-data-mono text-[10px] text-on-surface-variant opacity-60">
+                        AI ASSISTS. EVIDENCE EXPLAINS. HUMANS DECIDE.
+                    </div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple parallax effect for floating elements based on mouse movement
+        document.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
+            
+            const panels = document.querySelectorAll('.float-1, .float-2, .float-3');
+            panels.forEach((panel, index) => {
+                const speed = (index + 1) * 0.5;
+                panel.style.transform = `translate(${xAxis * speed}px, ${yAxis * speed}px)`;
+            });
+        });
+    </script>
+</body></html>

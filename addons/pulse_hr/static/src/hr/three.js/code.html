@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+<!-- STITCH_THREEJS_START:ANIMATION_11 class="fixed inset-0 w-full h-full bg-transparent" -->
+<div class="fixed inset-0 w-full h-full bg-transparent" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_11" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_11');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  (function() {
+  const container = document.getElementById('threejs-container-PULSE_CORE');
+  const width = container.clientWidth || window.innerWidth;
+  const height = container.clientHeight || window.innerHeight;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+  camera.position.z = 5;
+
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  container.appendChild(renderer.domElement);
+
+  // Lighting
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  scene.add(ambientLight);
+  const pointLight = new THREE.PointLight(0x2878FF, 2, 50);
+  pointLight.position.set(5, 5, 5);
+  scene.add(pointLight);
+
+  // Pulse Core - Central Translucent Sphere
+  const coreGeo = new THREE.IcosahedronGeometry(2, 4);
+  const coreMat = new THREE.MeshPhongMaterial({
+    color: 0x2878FF,
+    transparent: true,
+    opacity: 0.1,
+    wireframe: true,
+    emissive: 0x2878FF,
+    emissiveIntensity: 0.5
+  });
+  const core = new THREE.Mesh(coreGeo, coreMat);
+  scene.add(core);
+
+  // Inner Glow Sphere
+  const innerGeo = new THREE.SphereGeometry(1.2, 32, 32);
+  const innerMat = new THREE.MeshBasicMaterial({
+    color: 0x4C46E8,
+    transparent: true,
+    opacity: 0.3
+  });
+  const innerCore = new THREE.Mesh(innerGeo, innerMat);
+  core.add(innerCore);
+
+  // Data Nodes (Floating Octahedrons)
+  const nodes = [];
+  const nodeCount = 12;
+  for(let i=0; i<nodeCount; i++) {
+    const nodeGeo = new THREE.OctahedronGeometry(0.2, 0);
+    const nodeMat = new THREE.MeshPhongMaterial({
+      color: 0x8B45F7,
+      emissive: 0x8B45F7,
+      emissiveIntensity: 0.8
+    });
+    const node = new THREE.Mesh(nodeGeo, nodeMat);
+    const angle = (i / nodeCount) * Math.PI * 2;
+    const radius = 2.5 + Math.random();
+    node.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius, (Math.random()-0.5) * 2);
+    node.userData = { angle, radius, speed: 0.01 + Math.random()*0.01 };
+    scene.add(node);
+    nodes.push(node);
+  }
+
+  // Particle System (Stars/Data Bits)
+  const partCount = 200;
+  const partGeo = new THREE.BufferGeometry();
+  const partPos = new Float32Array(partCount * 3);
+  for(let i=0; i<partCount*3; i++) partPos[i] = (Math.random()-0.5) * 15;
+  partGeo.setAttribute('position', new THREE.BufferAttribute(partPos, 3));
+  const partMat = new THREE.PointsMaterial({ size: 0.02, color: 0x2878FF, transparent: true, opacity: 0.5 });
+  const particles = new THREE.Points(partGeo, partMat);
+  scene.add(particles);
+
+  const animate = () => {
+    requestAnimationFrame(animate);
+    const time = Date.now() * 0.001;
+    
+    // Heartbeat Pulse
+    const pulseScale = 1 + Math.sin(time * 2) * 0.05;
+    core.scale.set(pulseScale, pulseScale, pulseScale);
+    innerCore.scale.set(pulseScale, pulseScale, pulseScale);
+    
+    core.rotation.y += 0.002;
+    nodes.forEach(node => {
+      node.userData.angle += node.userData.speed;
+      node.position.x = Math.cos(node.userData.angle) * node.userData.radius;
+      node.position.y = Math.sin(node.userData.angle) * node.userData.radius;
+      node.rotation.x += 0.02;
+    });
+    
+    particles.rotation.y += 0.0005;
+    renderer.render(scene, camera);
+  };
+  animate();
+
+  window.addEventListener('resize', () => {
+    const w = container.clientWidth || window.innerWidth;
+    const h = container.clientHeight || window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+})();
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_11 -->
+</body>
+</html>

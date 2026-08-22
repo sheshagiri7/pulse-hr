@@ -1,0 +1,14 @@
+{
+  "name": "dayflow-pulse-3d-command-center",
+  "version": "1.0.0",
+  "description": "Dayflow Pulse - 3D HRMS & Workforce Intelligence Command Center",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  }
+}
