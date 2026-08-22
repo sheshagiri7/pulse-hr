@@ -28,7 +28,7 @@
             <span class="material-symbols-outlined" style="font-size: 22px;">auto_awesome</span>
           </div>
           <div>
-            <div class="dayflow-ai-title">DAYFLOW AI</div>
+            <div class="dayflow-ai-title">PULSE AI</div>
             <div class="dayflow-ai-subtitle">
               <span class="dayflow-ai-status-dot"></span>
               HR Intelligence Assistant
@@ -56,19 +56,19 @@
           <div class="dayflow-ai-welcome-desc">How can I help you understand your workforce today? Select a quick topic or type your query below.</div>
           
           <div class="dayflow-ai-quick-grid">
-            <button class="dayflow-ai-quick-btn" onclick="window.DayflowAI.sendPrompt('Give me today\'s workforce summary.')">
+            <button class="dayflow-ai-quick-btn" onclick="window.PulseAI.sendPrompt('Give me today\'s workforce summary.')">
               <span class="material-symbols-outlined" style="font-size: 16px; color: #2878FF;">dashboard</span>
               Workforce Overview
             </button>
-            <button class="dayflow-ai-quick-btn" onclick="window.DayflowAI.sendPrompt('Who is absent today?')">
+            <button class="dayflow-ai-quick-btn" onclick="window.PulseAI.sendPrompt('Who is absent today?')">
               <span class="material-symbols-outlined" style="font-size: 16px; color: #42e18d;">how_to_reg</span>
               Attendance Issues
             </button>
-            <button class="dayflow-ai-quick-btn" onclick="window.DayflowAI.sendPrompt('What leave requests need attention?')">
+            <button class="dayflow-ai-quick-btn" onclick="window.PulseAI.sendPrompt('What leave requests need attention?')">
               <span class="material-symbols-outlined" style="font-size: 16px; color: #d5bbff;">event_busy</span>
               Pending Leave
             </button>
-            <button class="dayflow-ai-quick-btn" onclick="window.DayflowAI.sendPrompt('Is payroll ready for review?')">
+            <button class="dayflow-ai-quick-btn" onclick="window.PulseAI.sendPrompt('Is payroll ready for review?')">
               <span class="material-symbols-outlined" style="font-size: 16px; color: #F4B400;">payments</span>
               Payroll Insights
             </button>
@@ -76,9 +76,9 @@
 
           <div style="font-size: 11px; color: #8B95AE; font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em;">Suggested Questions</div>
           <div class="dayflow-ai-chips">
-            <span class="dayflow-ai-chip" onclick="window.DayflowAI.sendPrompt('Show me employees with low attendance.')">Show low attendance</span>
-            <span class="dayflow-ai-chip" onclick="window.DayflowAI.sendPrompt('Which departments have attendance issues?')">Department issues</span>
-            <span class="dayflow-ai-chip" onclick="window.DayflowAI.sendPrompt('What is wrong on this page?')">Page context insights</span>
+            <span class="dayflow-ai-chip" onclick="window.PulseAI.sendPrompt('Show me employees with low attendance.')">Show low attendance</span>
+            <span class="dayflow-ai-chip" onclick="window.PulseAI.sendPrompt('Which departments have attendance issues?')">Department issues</span>
+            <span class="dayflow-ai-chip" onclick="window.PulseAI.sendPrompt('What is wrong on this page?')">Page context insights</span>
           </div>
         </div>
       </div>
@@ -323,7 +323,7 @@
   });
 
   // Global API Hook for Quick Prompts
-  window.DayflowAI = {
+  window.PulseAI = window.DayflowAI = {
     sendPrompt: function (promptText) {
       sendMessage(promptText);
     },
