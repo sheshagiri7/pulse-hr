@@ -9,14 +9,26 @@
     """,
     'category': 'Human Resources',
     'author': 'Team Pulse',
-    'depends': ['hr', 'hr_attendance', 'hr_holidays', 'base'],
+    'depends': ['hr', 'hr_attendance', 'hr_holidays', 'base', 'web'],
     'data': [
         'security/ir.model.access.csv',
         'views/employee_views.xml',
         'views/dashboard_views.xml',
+        'views/login_templates.xml',
         'data/demo_data.xml',
     ],
+    'assets': {
+        'web.assets_frontend': [
+            'pulse_hr/static/src/css/pulse_login.css',
+        ],
+        'web.assets_backend': [
+            'pulse_hr/static/src/css/pulse_dashboard.css',
+            'pulse_hr/static/src/js/pulse_dashboard.js',
+            'pulse_hr/static/src/xml/pulse_dashboard.xml',
+        ],
+    },
     'installable': True,
     'application': True,
     'license': 'LGPL-3',
 }
+
