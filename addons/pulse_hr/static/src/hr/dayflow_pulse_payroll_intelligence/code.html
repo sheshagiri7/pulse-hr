@@ -294,40 +294,8 @@
 <span class="material-symbols-outlined text-error">warning</span> Review Required (6)
                         </h3>
 </div>
-<div class="flex-1 overflow-y-auto max-h-[300px] p-2 space-y-1 custom-scrollbar">
-<!-- Anomaly Item 1 -->
-<div class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-high transition-colors">
-<div class="flex items-center gap-3">
-<img class="w-10 h-10 rounded-full object-cover" data-alt="A small avatar of a male employee with a neutral expression against a dark background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQ9ElTIyhuZZ1K2ZNQ0IM-SyeamHjE6mpd7miURGin0yycNswKQ1MUNw2PfEzTCpHSGk8Cte8bl_y5IqXXplg4SrBGTZphH0G-DMj9fRzxv62N9zl4i5stnl2923wnjNJJteD41SuCweI8XVyxbEPYutyHU75q2UV0ZIJ_9pF2DuFI-mzB9rymLUmlTIMeT_YmGQZ0PjoDmf_cbFeG19E2wjoCXzk6e4SY_rXfkm1Nv87kIAxuic7OJQ">
-<div>
-<p class="font-body-md text-body-md text-on-surface">Rahul Sharma</p>
-<p class="font-label-sm text-label-sm text-text-muted">Unusual Overtime (42hrs)</p>
-</div>
-</div>
-<button id="proveRahul" class="prove-btn px-3 py-1 bg-primary/10 text-primary border border-primary/30 rounded text-xs font-bold uppercase tracking-wider hover:bg-primary/20 transition-colors cursor-pointer" data-emp="Rahul Sharma" data-issue="Unusual Overtime (42hrs)">Prove This</button>
-</div>
-<!-- Anomaly Item 2 -->
-<div class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-high transition-colors">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface font-bold">AK</div>
-<div>
-<p class="font-body-md text-body-md text-on-surface">Anita Kumar</p>
-<p class="font-label-sm text-label-sm text-text-muted">Bonus Discrepancy</p>
-</div>
-</div>
-<button id="proveAnita" class="prove-btn px-3 py-1 bg-primary/10 text-primary border border-primary/30 rounded text-xs font-bold uppercase tracking-wider hover:bg-primary/20 transition-colors cursor-pointer" data-emp="Anita Kumar" data-issue="Bonus Discrepancy">Prove This</button>
-</div>
-<!-- Anomaly Item 3 -->
-<div class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-high transition-colors">
-<div class="flex items-center gap-3">
-<img class="w-10 h-10 rounded-full object-cover" data-alt="A small avatar of a female employee with glasses." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHrOeS4101O20xj3hhyTgXxqFMNiM4YFlcksVpAy-BZQau9TJqjiDvK3wG9-SweJLqS7CTRWgJhnVfdnQOvzdKPgu8QpBHnoHZWiDmCwqlekl3BGDsGzqUpJ3_bUU4leBLwoKAR1zfjuDf4u67iWq1GuYT5cIvasSbhLrCB-36sLtR0j7YLeQ5WTaDxYW1tAuHXfwg1VETbIWRRl3zprxBLxKA0frlk3McndV0HBxXPYaLjhKge6-HeA">
-<div>
-<p class="font-body-md text-body-md text-on-surface">Priya Desai</p>
-<p class="font-label-sm text-label-sm text-text-muted">Missing Tax Decl.</p>
-</div>
-</div>
-<button id="provePriya" class="prove-btn px-3 py-1 bg-primary/10 text-primary border border-primary/30 rounded text-xs font-bold uppercase tracking-wider hover:bg-primary/20 transition-colors cursor-pointer" data-emp="Priya Desai" data-issue="Missing Tax Decl.">Prove This</button>
-</div>
+<div id="payrollReviewList" class="flex-1 overflow-y-auto max-h-[300px] p-2 space-y-1 custom-scrollbar">
+<div class="p-4 text-center text-zinc-400">Loading employee wage summaries from Odoo...</div>
 </div>
 </div>
 </div>
@@ -426,5 +394,38 @@
     renderer.setSize(w, h);
   });
 })();
+
+// Fetch Real Odoo Employee Salary & Wage Summaries
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('/api/employees')
+    .then(res => res.json())
+    .then(employees => {
+      const container = document.getElementById('payrollReviewList');
+      if (!container) return;
+
+      if (employees && employees.length > 0) {
+        container.innerHTML = employees.map(emp => {
+          const initials = (emp.name || 'EM').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+          return `
+            <div class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-high transition-colors">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">${initials}</div>
+                <div>
+                  <p class="font-body-md text-body-md text-on-surface font-medium">${emp.name}</p>
+                  <p class="font-label-sm text-xs text-text-muted">${emp.role || 'Employee'} • ${emp.dept || 'Core'}</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="px-3 py-1 bg-tertiary/10 text-tertiary border border-tertiary/30 rounded text-xs font-bold font-mono uppercase">Verified</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else {
+        container.innerHTML = `<div class="p-4 text-center text-zinc-400">No payroll records found.</div>`;
+      }
+    })
+    .catch(err => console.error('Payroll fetch error:', err));
+});
 </script>
 </body></html>
