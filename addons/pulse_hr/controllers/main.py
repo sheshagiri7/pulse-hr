@@ -297,7 +297,19 @@ class PulseApiController(http.Controller):
                 'request_date_to': end_date,
             })
             leave_id = leave_rec.id
-        except Exception:
+
+            # Create Notification for HR Officers in Odoo Database
+            hr_emps = request.env['hr.employee'].sudo().search([])
+            for hr_e in hr_emps:
+                if 'HR' in (hr_e.job_title or '') or 'Officer' in (hr_e.name or '') or hr_e.work_email == 'hr.officer@pulse.local':
+                    request.env['pulse.notification'].sudo().create({
+                        'employee_id': hr_e.id,
+                        'title': f'New Leave Request: {emp.name}',
+                        'message': f'{emp.name} applied for {leave_type_name} from {start_date} to {end_date}.',
+                        'notification_type': 'warning',
+                        'is_read': False,
+                    })
+        except Exception as e:
             existing = request.env['hr.leave'].sudo().search([('employee_id', '=', emp.id)], order='create_date desc', limit=1)
             leave_id = existing.id if existing else 1
 
@@ -560,6 +572,17 @@ class PulseApiController(http.Controller):
                 pass
             leave_rec.write({'state': 'validate'})
 
+            # Create Employee Notification in Odoo Database
+            if leave_rec.employee_id:
+                leave_type_name = leave_rec.holiday_status_id.name if leave_rec.holiday_status_id else 'Leave'
+                request.env['pulse.notification'].sudo().create({
+                    'employee_id': leave_rec.employee_id.id,
+                    'title': 'Leave Request Approved ✓',
+                    'message': f'Your {leave_type_name} request ({leave_rec.request_date_from} to {leave_rec.request_date_to}) has been APPROVED by HR.',
+                    'notification_type': 'success',
+                    'is_read': False,
+                })
+
         return self._json_response({'message': 'Leave approved successfully', 'status': 'APPROVED'})
 
     # 11c. HR Reject Leave Endpoint
@@ -591,8 +614,16 @@ class PulseApiController(http.Controller):
                 pass
             leave_rec.write({'state': 'refuse'})
 
-        if leave_rec:
-            leave_rec.action_refuse()
+            # Create Employee Notification in Odoo Database
+            if leave_rec.employee_id:
+                leave_type_name = leave_rec.holiday_status_id.name if leave_rec.holiday_status_id else 'Leave'
+                request.env['pulse.notification'].sudo().create({
+                    'employee_id': leave_rec.employee_id.id,
+                    'title': 'Leave Request Rejected ❌',
+                    'message': f'Your {leave_type_name} request ({leave_rec.request_date_from} to {leave_rec.request_date_to}) was REJECTED by HR.',
+                    'notification_type': 'alert',
+                    'is_read': False,
+                })
 
         return self._json_response({'message': 'Leave rejected successfully', 'status': 'REJECTED'})
 

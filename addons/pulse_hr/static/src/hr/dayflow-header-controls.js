@@ -148,6 +148,40 @@
     document.body.appendChild(settingsBackdrop);
     document.body.appendChild(settingsModal);
 
+    // Live Notification Fetch from Odoo Database
+    function loadLiveNotifications() {
+      fetch('/api/pulse/notifications')
+        .then(res => res.json())
+        .then(data => {
+          if (!data.notifications || data.notifications.length === 0) return;
+          const bodyEl = notifDropdown.querySelector('.dayflow-notif-body');
+          const badgeEl = notifDropdown.querySelector('#notifBadgeCount');
+          if (badgeEl) badgeEl.textContent = `${data.unread_count || data.notifications.length} NEW`;
+
+          if (bodyEl) {
+            bodyEl.innerHTML = data.notifications.map(n => `
+              <a href="/hr/leaves" class="dayflow-notif-item">
+                <div class="dayflow-notif-icon" style="background: rgba(244, 180, 0, 0.15); color: #F4B400;">
+                  <span class="material-symbols-outlined" style="font-size: 20px;">event_upcoming</span>
+                </div>
+                <div class="dayflow-notif-text">
+                  <div class="dayflow-notif-heading">${escapeHtml(n.title)}</div>
+                  <div class="dayflow-notif-desc">${escapeHtml(n.message)}</div>
+                </div>
+              </a>
+            `).join('');
+          }
+        })
+        .catch(() => {});
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    loadLiveNotifications();
+
     // Bind Notification Bell and Settings Gear Icons
     document.querySelectorAll('.material-symbols-outlined').forEach(icon => {
       const text = icon.textContent.trim();
@@ -160,6 +194,7 @@
           btn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
+            loadLiveNotifications();
             notifDropdown.classList.toggle('open');
             settingsModal.classList.remove('open');
             settingsBackdrop.classList.remove('open');
