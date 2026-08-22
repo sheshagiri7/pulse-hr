@@ -874,7 +874,7 @@
                   </div>
                   <div className="mt-2 space-y-2">
                     {(notificationsList.length > 0 ? notificationsList : [
-                      { id: '1', title: 'Biometric Duty Check-In', message: 'Main Gate Terminal #04', created_at: 'Just now', is_read: false },
+                      { id: '1', title: 'Portal Shift Check-In', message: 'Verified via Pulse Web Portal', created_at: 'Just now', is_read: false },
                       { id: '2', title: 'Paid Leave Approved', message: 'Your leave request has been approved by HR.', created_at: 'Today', is_read: false }
                     ]).map((n) => (
                       <div 
@@ -1364,8 +1364,8 @@
         const activities = [
           {
             id: 'act-1',
-            title: 'Biometric Duty Check-In',
-            description: 'Main Gate Terminal #04',
+            title: 'Portal Shift Check-In',
+            description: 'Pulse Web Portal (Verified)',
             time: '09:02 AM Today',
             category: 'Attendance',
             status: 'Verified',
@@ -1373,8 +1373,8 @@
           },
           {
             id: 'act-2',
-            title: 'Security Badge Access Granted',
-            description: 'Mission Operations Deck L4',
+            title: 'Portal Security Session Active',
+            description: 'Authenticated Web Session',
             time: '10:15 AM Today',
             category: 'Security',
             status: 'Authorized',
@@ -2372,15 +2372,15 @@
             if (q.includes('leave') || q.includes('vacation') || q.includes('pto') || q.includes('absent')) {
               aiReply = `📅 **Leave Telemetry Summary:**\n• **Paid Leave Balance**: 16 Days remaining for this cycle.\n• **YTD Taken**: 2 Days (1 Medical, 1 Casual).\n• **Pending Requests**: 1 active clearance awaiting Dr. Sarah Chen's approval.\n• **Blackout Notice**: Sep 01–10 orbital transit window requires 5-day prior submission.`;
             } else if (q.includes('salary') || q.includes('payroll') || q.includes('pay') || q.includes('money') || q.includes('bonus') || q.includes('allowance')) {
-              aiReply = `💰 **Compensation Structure for ${profileData.name}:**\n• **Annual CTC**: ${profileData.annualCtc}\n• **Monthly Base**: ${profileData.monthlyBase}\n• **Shift Surge Allowance**: ${profileData.shiftAllowance} (Active Tier 1)\n• **Next Payday**: Sep 01, 2026 (In 10 Days via Standard Salary Account •••• 8492)\n• **YTD Earnings**: ₹12,48,400.00 INR (Tax Compliant).`;
+              aiReply = `💰 **Compensation Structure for ${profileData.name}:**\n• **Annual CTC**: ${profileData.annualCtc}\n• **Monthly Base**: ${profileData.monthlyBase}\n• **Shift Surge Allowance**: ${profileData.shiftAllowance} (Active Tier 1)\n• **Next Payday**: Sep 01, 2026 (In 10 Days via HDFC Bank Salary Account •••• 8492)\n• **YTD Earnings**: ₹12,48,400.00 INR (Form 16 Tax Compliant).`;
             } else if (q.includes('manager') || q.includes('hr') || q.includes('team') || q.includes('sarah')) {
-              aiReply = `👥 **Hierarchy & HR Contacts:**\n• **HR Head & Lead**: **Dr. Sarah Chen** (VP Mission Operations & Head of People HR)\n• **Email**: sarah.chen@pulse.internal • 📞 +1 (555) 019-8420\n• **Office Hours**: 09:00 - 17:00 UTC (Floor 12)\n• **Direct Reports**: 14 engineers in Orbital Squad.`;
+              aiReply = `👥 **Hierarchy & HR Contacts:**\n• **HR Head & Lead**: **Dr. Sarah Chen** (VP Mission Operations & Head of People HR)\n• **Email**: sarah.chen@pulse.internal • 📞 +91 98765 43210\n• **Office Hours**: 09:00 - 17:00 IST (Bengaluru HQ)\n• **Direct Reports**: 14 engineers in Core Engineering Squad.`;
             } else if (q.includes('check') || q.includes('punch') || q.includes('duty') || q.includes('attendance') || q.includes('clock')) {
-              aiReply = `🟢 **Duty Status & Biometrics:**\n• **Current Status**: ${currentStatus}\n• **Shift Target**: 8.0h Daily (Punctuality Score: 99% - Top 1%)\n• **Biometric Punch**: Synced via Gate Terminal #04.\n• You can toggle Clock In / Clock Out anytime using the bottom-right glowing button.`;
+              aiReply = `🟢 **Duty Status & Portal Attendance:**\n• **Current Status**: ${currentStatus}\n• **Shift Target**: 8.0h Daily (Punctuality Score: 99% - Top 1%)\n• **Web Punch**: Verified via Pulse Web Portal.\n• You can toggle Clock In / Clock Out anytime using the bottom-right glowing button.`;
             } else if (q.includes('announcement') || q.includes('news') || q.includes('bulletin') || q.includes('all-hands')) {
-              aiReply = `📢 **Upcoming Announcements:**\n1. **Mission All-Hands (📌 Pinned)**: Friday, Aug 28 at 16:00 UTC with Dr. Sarah Chen.\n2. **Leave Blackout Notice**: Sep 01 - Sep 10 window.\n3. **Bravo Squad Milestone**: 99.8% shift uptime award.`;
+              aiReply = `📢 **Upcoming Announcements:**\n1. **Mission All-Hands (📌 Pinned)**: Friday, Aug 28 at 16:00 IST with Dr. Sarah Chen.\n2. **Leave Blackout Notice**: Sep 01 - Sep 10 window.\n3. **Bravo Squad Milestone**: 99.8% shift uptime award.`;
             } else {
-              aiReply = `🛰️ **Pulse Copilot**: I analyzed your request for "${query}". Your personnel record (**${profileData.empId}**) is verified with **${profileData.securityClearance}**. All shift telemetry, biometrics, and payroll streams are operating nominally at 100% SLA.`;
+              aiReply = `🛰️ **Pulse Copilot**: I analyzed your request for "${query}". Your personnel record (**${profileData.empId}**) is verified with **${profileData.securityClearance}**. All shift telemetry, web attendance, and payroll streams are operating nominally at 100% SLA.`;
             }
 
             setMessages(prev => [
