@@ -1,41 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Client Action for Pulse HR Gamified Dashboard -->
-    <record id="action_pulse_dashboard" model="ir.actions.client">
-        <field name="name">Pulse HR Dashboard</field>
-        <field name="tag">pulse_hr.dashboard</field>
+    <!-- TODO (Person 3): build the role-based dashboard here.
+         Kanban view on hr.employee showing:
+         - employee photo, name, department
+         - status dot color (green=present, gray=leave, yellow=absent)
+         - check-in/check-out button (link to hr_attendance action)
+
+         Example starter kanban skeleton:
+
+    <record id="pulse_hr_employee_kanban" model="ir.ui.view">
+        <field name="name">pulse.hr.employee.kanban</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <kanban class="o_hr_employee_kanban">
+                <field name="name"/>
+                <field name="login_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <strong><field name="name"/></strong>
+                            <div><field name="login_id"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
     </record>
-
-    <!-- Root Menu Item for Pulse HR -->
-    <menuitem id="menu_pulse_hr_root"
-              name="Pulse HR"
-              sequence="10"/>
-
-    <!-- Dashboard Menu (Default action on clicking Pulse HR) -->
-    <menuitem id="menu_pulse_hr_dashboard"
-              name="Dashboard"
-              parent="menu_pulse_hr_root"
-              action="action_pulse_dashboard"
-              sequence="1"/>
-
-    <!-- Employees Menu -->
-    <menuitem id="menu_pulse_hr_employees"
-              name="Employees"
-              parent="menu_pulse_hr_root"
-              action="hr.open_view_employee_list_my"
-              sequence="2"/>
-
-    <!-- Attendances Menu -->
-    <menuitem id="menu_pulse_hr_attendances"
-              name="Attendances"
-              parent="menu_pulse_hr_root"
-              action="hr_attendance.hr_attendance_action"
-              sequence="3"/>
-
-    <!-- Time Off Menu -->
-    <menuitem id="menu_pulse_hr_leaves"
-              name="Time Off"
-              parent="menu_pulse_hr_root"
-              action="hr_holidays.hr_leave_action_action_approve_department"
-              sequence="4"/>
+    -->
 </odoo>
