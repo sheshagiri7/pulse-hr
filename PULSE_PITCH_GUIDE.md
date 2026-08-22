@@ -1,4 +1,4 @@
-# 🏆 PULSE HRMS — HACKATHON WINNING PRESENTATION & DEMO GUIDE
+# 🏆 PULSE HRMS — PRESENTATION & DEMO PITCH GUIDE
 
 > **Project Name**: PULSE HRMS (Powered by Odoo 17 Engine)  
 > **Event**: ODOO × NMIT BANGALORE HACKATHON 2026  
@@ -106,7 +106,7 @@ Follow this exact order during live evaluation:
 
 ---
 
-## 🏆 JUDGES' TOP QUESTIONS & WINNING ANSWERS
+## 🏆 JUDGES' TOP QUESTIONS & ANSWERS
 
 * **Q: Who developed PULSE and for what event?**
   * **Answer**: *"PULSE HRMS was created by **Team Zyntax** from Rathinam Technical Campus — Sheshagiri .S (Backend Lead), Ramamanikandan .C (Frontend Lead), Yokesh .A (Database Lead), and Subasri .S (Research/Dev) for the **ODOO × NMIT Bangalore Hackathon 2026**."*
