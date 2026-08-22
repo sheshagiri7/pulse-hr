@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PULSE HRMS — Team Zyntax Presentation Deck</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #070913;
+            --bg-card: rgba(18, 22, 41, 0.75);
+            --border-glow: rgba(124, 58, 237, 0.35);
+            --accent-purple: #7c3aed;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --accent-emerald: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(124, 58, 237, 0.18) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 45%);
+        }
+
+        /* Top Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 2.5rem;
+            background: rgba(10, 14, 28, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .brand-badge {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .team-pill {
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.4);
+            color: #c4b5fd;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-icon {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-main);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-icon:hover {
+            background: rgba(124, 58, 237, 0.25);
+            border-color: var(--accent-purple);
+            transform: translateY(-1px);
+        }
+
+        /* Slide Container */
+        main.slide-stage {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            max-width: 1100px;
+            height: 100%;
+            max-height: 650px;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6),
+                        0 0 30px rgba(124, 58, 237, 0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.96) translateY(20px);
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        visibility 0.4s;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateY(0);
+        }
+
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 1.25rem;
+        }
+
+        .slide-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #ffffff 40%, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .slide-subtitle {
+            font-size: 1rem;
+            color: var(--accent-cyan);
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+
+        .slide-number-tag {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+        }
+
+        .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        /* Slide Typography & Elements */
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff 30%, #a78bfa 70%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .card-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .card-box:hover {
+            border-color: rgba(124, 58, 237, 0.4);
+            background: rgba(124, 58, 237, 0.05);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .highlight-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(6, 182, 212, 0.2));
+            border: 1px solid var(--accent-purple);
+            color: #ddd6fe;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+        }
+
+        /* Flow Stepper */
+        .workflow-stepper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+
+        .step-node {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            flex: 1;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .step-arrow {
+            color: var(--accent-purple);
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        /* Footer Controls */
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2.5rem;
+            background: rgba(10, 14, 28, 0.9);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 100;
+        }
+
+        .progress-bar-container {
+            flex: 1;
+            max-width: 400px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            overflow: hidden;
+            margin: 0 2rem;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 7.69%;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+            transition: width 0.3s ease;
+        }
+
+        .slide-counter {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .shortcut-hint {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .kbd {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="brand">
+            <span class="brand-badge">PULSE HRMS</span>
+            <span class="team-pill">TEAM ZYNTAX</span>
+        </div>
+        <div class="nav-controls">
+            <a href="http://localhost:8069/employee/dashboard" target="_blank" class="btn-icon" style="text-decoration:none;">
+                👤 Employee Portal
+            </a>
+            <a href="http://localhost:8069/hr/dashboard" target="_blank" class="btn-icon" style="text-decoration:none;">
+                🏢 HR Command Center
+            </a>
+            <button class="btn-icon" onclick="toggleFullscreen()">
+                ⛶ Fullscreen
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Slide Stage -->
+    <main class="slide-stage">
+
+        <!-- SLIDE 1 -->
+        <section class="slide active" id="slide-1">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-subtitle">ODOO × NMIT BANGALORE HACKATHON 2026</div>
+                    <div class="hero-title">PULSE HRMS</div>
+                </div>
+                <span class="slide-number-tag">SLIDE 01 / 13</span>
+            </div>
+            <div class="slide-body">
+                <h2 style="font-size: 1.8rem; font-weight: 700; color: #e2e8f0;">
+                    Smart Human Resource Management System Built on Odoo 17
+                </h2>
+                <div class="grid-2" style="margin-top: 1rem;">
+                    <div class="card-box">
+                        <div class="card-title">🚀 Team Name</div>
+                        <div class="card-desc" style="font-size: 1.2rem; color: #fff; font-weight: 700;">TEAM ZYNTAX</div>
+                        <div class="card-desc">Rathinam Technical Campus</div>
+                    </div>
+                    <div class="card-box">
+                        <div class="card-title">💡 Project Focus</div>
+                        <div class="card-desc" style="font-size: 1.1rem; color: #fff;">Dayflow HRMS Challenge</div>
+                        <div class="card-desc">Centralized, Automated & Role-Secured Workforce Platform</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2 -->
+        <section class="slide" id="slide-2">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Team Zyntax</div>
+                    <div class="slide-subtitle">Engineering & Development Roster</div>
+                </div>
+                <span class="slide-number-tag">SLIDE 02 / 13</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card-box" style="border-left: 4px solid var(--accent-purple);">
+                        <div class="card-title">👑 Sheshagiri .S</div>
+                        <div class="card-desc"><strong style="color:#fff;">Team Leader & Backend Developer</strong></div>
+                        <div class="card-desc" style="margin-top:0.5rem;">Odoo 17 Core Architecture, Python ORM Addons & Security Access Matrix</div>
+                    </div>
+                    <div class="card-box" style="border-left: 4px solid var(--accent-cyan);">
+                        <div class="card-title">🎨 Ramamanikandan .C</div>
+                        <div class="card-desc"><strong style="color:#fff;">Frontend Developer</strong></div>
+                        <div class="card-desc" style="margin-top:0.5rem;">React 18 Workspace Interfaces, Glassmorphic UI & Duty Telemetry UI</div>
+                    </div>
+                    <div class="card-box" style="border-left: 4px solid var(--accent-pink);">
+                        <div class="card-title">🗄️ Yokesh .A</div>
+                        <div class="card-desc"><strong style="color:#fff;">Database Engineer</strong></div>
+                        <div class="card-desc" style="margin-top:0.5rem;">PostgreSQL Schema Design, Relational Integrity & Odoo Model Integration</div>
+                    </div>
+                    <div class="card-box" style="border-left: 4px solid var(--accent-emerald);">
+                        <div class="card-title">🔍 Subasri .S</div>
+                        <div class="card-desc"><strong style="color:#fff;">Research & Developer</strong></div>
+                        <div class="card-desc" style="margin-top:0.5rem;">HR Compliance Research, Form 16 Tax Specifications & Workflow Optimization</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3 -->
+        <section class="slide" id="slide-3">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Problem Statement</div>
+                    <div class="slide-subtitle">Challenges in Traditional HR Operations</div>
+                </div>
+                <span class="slide-number-tag">SLIDE 03 / 13</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-3">
+                    <div class="card-box">
+                        <div class="card-title" style="color:#ef4444;">❌ Manual & Fragmented</div>
+                        <div class="card-desc">HR operations scattered across spreadsheets, paper leave slips, and disconnected chat channels.</div>
+                    </div>
+                    <div class="card-box">
+                        <div class="card-title" style="color:#f59e0b;">⚠️ Attendance Blindspots</div>
+                        <div class="card-desc">Lack of real-time duty telemetry leads to manual calculation errors and payroll discrepancies.</div>
+                    </div>
+                    <div class="card-box">
+                        <div class="card-title" style="color:#ec4899;">🔓 Security & Privacy Risks</div>
+                        <div class="card-desc">Sensitive salary records and employee identity data exposed without strict role-based access control.</div>
+                    </div>
+                </div>
+                <div class="card-box" style="background: rgba(124, 58, 237, 0.15); border-color: var(--accent-purple); text-align: center;">
+                    <strong style="color: #fff; font-size: 1.1rem;">🎯 OUR GOAL:</strong> Bring essential HR operations into one centralized, automated, and secure platform.
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4 -->
+        <section class="slide" id="slide-4">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Our Solution</div>
+                    <div class="slide-subtitle">Unified Odoo 17 HRMS Platform</div>
+                </div>
+                <span class="slide-number-tag">SLIDE 04 / 13</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card-box">
+                        <div class="card-title">🧩 Integrated Modules</div>
+                        <ul style="color: var(--text-muted); padding-left: 1.2rem; line-height: 1.8;">
+                            <li>👤 <strong style="color:#fff;">Employee Directory</strong> & Onboarding</li>
+                            <li>🕐 <strong style="color:#fff;">Attendance Telemetry</strong> & Worked Hours</li>
+                            <li>🏖 <strong style="color:#fff;">Smart Leave Dispatcher</strong> & Review</li>
+                            <li>💰 <strong style="color:#fff;">Indian Payroll & Form 16</strong> PDF Engine</li>
+                        </ul>
+                    </div>
+                    <div class="card-box">
+                        <div class="card-title">⚡ Key Architecture Approach</div>
+                        <div class="card-desc" style="font-size:1.1rem; color:#fff; margin-bottom: 1rem;">
+                            Odoo Native HR Apps + Custom Development = <strong>PULSE HRMS</strong>
+                        </div>
+                        <div class="card-desc">
+                            Automated workflows reduce manual overhead, while role-based security ensures total confidentiality.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5 -->
+        <section class="slide" id="slide-5">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Workflow Architecture</div>
+                    <div class="slide-subtitle">End-to-End Lifecycle Automation</div>
+                </div>
+                <span class="slide-number-tag">SLIDE 05 / 13</span>
+            </div>
+            <div class="slide-body">
+                <div class="workflow-stepper">
+                    <div class="step-node">
+                        <div style="color:var(--accent-cyan); font-weight:700;">1. HR Onboards</div>
+                        <div style="color:var(--text-muted); font-size:0.75rem;">Create Employee</div>
+                    </div>
+                    <span class="step-arrow">➔</span>
+                    <div class="step-node">
+                        <div style="color:var(--accent-purple); font-weight:700;">2. Auto Employee ID</div>
+                        <div style="color:var(--text-muted); font-size:0.75rem;">OIJODO20260001</div>
+                    </div>
+                    <span class="step-arrow">➔</span>
+                    <div class="step-node">
+                        <div style="color:var(--accent-pink); font-weight:700;">3. Duty Punch</div>
+                        <div style="color:var(--text-muted); font-size:0.75rem;">Check-in / Out</div>
+                    </div>
+                    <span class="step-arrow">➔</span>
+                    <div class="step-node">
+                        <div style="color:var(--accent-emerald); font-weight:700;">4. Leave Review</div>
+                        <div style="color:var(--text-muted); font-size:0.75rem;">1-Click Approval</div>
+                    </div>
+                    <span class="step-arrow">➔</span>
+                    <div class="step-node">
+                        <div style="color:#f59e0b; font-weight:700;">5. Payroll & Form 16</div>
+                        <div style="color:var(--text-muted); font-size:0.75rem;">Tax PDF Export</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6 -->
+        <section class="slide" id="slide-6">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Key Innovation</div>
+                    <div class="slide-subtitle">Automatic Employee Identity Generation</div>
+                </div>
+                <span class="slide-number-tag">SLIDE 06 / 13</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card-box">
+                        <div class="card-title">🆔 ID Pattern Format</div>
+                        <div class="card-desc" style="margin-bottom: 1rem;">
+                            Company Code + Initials + Joining Year + Serial Number
+                        </div>
+                        <div class="highlight-badge">OIJODO20260001</div>
+                    </div>
+                    <div class="card-box">
+                        <div class="card-title">🌟 Key Benefits</div>
+                        <ul style="color: var(--text-muted); padding-left: 1.2rem; line-height: 1.8;">
+                            <li>✅ Eliminates manual entry errors</li>
+                            <li>✅ Guarantees consistent identity across HR apps</li>
+                            <li>✅ Simplifies employee onboarding</li>
+                            <li>✅ Creates an auditable ID structure</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 7 -->
+        <section class="slide" id="slide-7">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Core Features</div>
+                    <div class="slide-subtitle">Comprehensive HR Toolkit</div>
+                </div>
+                <span class="slide-number-tag">SLIDE 07 / 13</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card-box">
+                        <div class="card-title">👤 Employee Management</div>
+                        <div class="card-desc">Full profiles, contact info, job tiers, and security clearance access matrix.</div>
+                    </div>
+                    <div class="card-box">
+                        <div class="card-title">🕐 Attendance Telemetry</div>
+                        <div class="card-desc">1-click duty punch, worked hours tracking, and live punctuality scores.</div>
+                    </div>
+                    <div class="card-box">
+                        <div class="card-title">🏖 Leave Management</div>
+                        <div class="card-desc">Casual/Sick leave dispatcher with instant 1-click HR approval queue.</div>
+                    </div>
+                    <div class="card-box">
+                        <div class="card-title">💰 Payroll & Form 16</div>
+                        <div class="card-desc">INR (₹) wage computation with instant printable Form 16 annual tax certificate export.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8 -->
+        <section class="slide" id="slide-8">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">User Roles & Security</div>
+                    <div class="slide-subtitle">Role-Based Access Control (RBAC)</div>
+                </div>
+                <span class="slide-number-tag">SLIDE 08 / 13</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card-box" style="border-top: 4px solid var(--accent-purple);">
+                        <div class="card-title">🏢 HR Officer / Admin</div>
+                        <ul style="color: var(--text-muted); padding-left: 1.2rem; line-height: 1.6;">
+                            <li>Create & onboarding employee profiles</li>
+                            <li>Audit company-wide attendance telemetry</li>
+                            <li>Approve / Reject leave requests</li>
+                            <li>Access authorized payroll data & broadcasts</li>
+                        </ul>
+                    </div>
+                    <div class="card-box" style="border-top: 4px solid var(--accent-cyan);">
+                        <div class="card-title">👤 Employee</div>
+                        <ul style="color: var(--text-muted); padding-left: 1.2rem; line-height: 1.6;">
+                            <li>View personal profile & duty status</li>
+                            <li>1-click check-in & check-out</li>
+                            <li>Apply for leave & view approval status</li>
+                            <li>Download read-only payslips & Form 16</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 9 -->
+        <section class="slide" id="slide-9">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">ER Diagram</div>
+                    <div class="slide-subtitle">Relational Odoo Database Architecture</div>
+                </div>
+                <span class="slide-number-tag">SLIDE 09 / 13</span>
+            </div>
+            <div class="slide-body">
+                <div class="card-box" style="font-family: var(--font-mono); font-size: 0.85rem; background: rgba(0,0,0,0.4); line-height: 1.5;">
+                    <div style="color: var(--accent-cyan); font-weight: 700; margin-bottom: 0.5rem;">[ Database Relations ]</div>
+                    <div>hr.employee (1) ───► (N) hr.attendance  [id, employee_id, check_in, check_out]</div>
+                    <div>hr.employee (1) ───► (N) hr.leave       [id, employee_id, holiday_status_id, state]</div>
+                    <div>hr.employee (1) ───► (N) pulse.payroll   [id, employee_id, month_year, net_wage]</div>
+                    <div>hr.employee (1) ───► (N) pulse.announcement [id, title, summary, target_audience]</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 10 -->
+        <section class="slide" id="slide-10">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Technology Stack</div>
+                    <div class="slide-subtitle">Modern Enterprise Architecture</div>
+                </div>
+                <span class="slide-number-tag">SLIDE 10 / 13</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-4">
+                    <div class="card-box">
+                        <div class="card-title">🐍 Backend</div>
+                        <div class="card-desc"><strong style="color:#fff;">Odoo 17</strong><br>Python 3.10 ORM</div>
+                    </div>
+                    <div class="card-box">
+                        <div class="card-title">🗄️ Database</div>
+                        <div class="card-desc"><strong style="color:#fff;">PostgreSQL 15</strong><br>Dockerized</div>
+                    </div>
+                    <div class="card-box">
+                        <div class="card-title">⚛️ Frontend</div>
+                        <div class="card-desc"><strong style="color:#fff;">React 18</strong><br>Three.js & CSS Tokens</div>
+                    </div>
+                    <div class="card-box">
+                        <div class="card-title">⚡ API Layer</div>
+                        <div class="card-desc"><strong style="color:#fff;">JSON-RPC</strong><br>RESTful Controllers</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 11 -->
+        <section class="slide" id="slide-11">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Impact & Value</div>
+                    <div class="slide-subtitle">Measurable Outcomes for Stakeholders</div>
+                </div>
+                <span class="slide-number-tag">SLIDE 11 / 13</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-3">
+                    <div class="card-box">
+                        <div class="card-title"> For HR</div>
+                        <div class="card-desc">⚡ 80% lower onboarding effort<br>📊 Real-time telemetry<br>⏱️ 1-click approvals</div>
+                    </div>
+                    <div class="card-box">
+                        <div class="card-title"> For Employees</div>
+                        <div class="card-desc">📱 Mobile self-service<br>⏱️ Instant check-in<br>📄 Instant Form 16 Tax PDF</div>
+                    </div>
+                    <div class="card-box">
+                        <div class="card-title"> For Organization</div>
+                        <div class="card-desc">🛡️ Total data security<br>🔍 Zero identity duplicate<br>📈 Full HR governance</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 12 -->
+        <section class="slide" id="slide-12">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Conclusion</div>
+                    <div class="slide-subtitle">Key Differentiators</div>
+                </div>
+                <span class="slide-number-tag">SLIDE 12 / 13</span>
+            </div>
+            <div class="slide-body">
+                <div class="card-box" style="background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(6, 182, 212, 0.15)); border-color: var(--accent-purple);">
+                    <div class="card-title" style="font-size: 1.3rem;">🏆 Key Differentiators</div>
+                    <ul style="color: #fff; padding-left: 1.2rem; line-height: 1.8; font-size: 1.1rem; margin-top: 0.5rem;">
+                        <li>🌟 <strong>Automatic Employee Identity Generation</strong> (<code>OIJODO20260001</code>)</li>
+                        <li>🌟 <strong>Dedicated Role Workspaces</strong> (Employee vs HR Command Center)</li>
+                        <li>🌟 <strong>Odoo 17 Engine Integration</strong> with Form 16 Tax Certificate Export</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 13 -->
+        <section class="slide" id="slide-13">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-subtitle">TEAM ZYNTAX</div>
+                    <div class="hero-title" style="font-size: 3rem;">THANK YOU!</div>
+                </div>
+                <span class="slide-number-tag">SLIDE 13 / 13</span>
+            </div>
+            <div class="slide-body">
+                <div style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                    We are open for Questions & Live Interactive Demonstration.
+                </div>
+                <div class="grid-3">
+                    <a href="http://localhost:8069/employee/dashboard" target="_blank" class="card-box" style="text-decoration:none; text-align:center;">
+                        <div class="card-title" style="justify-content:center;">👤 Employee Workspace</div>
+                        <div class="card-desc">Open `/employee/dashboard`</div>
+                    </a>
+                    <a href="http://localhost:8069/hr/dashboard" target="_blank" class="card-box" style="text-decoration:none; text-align:center;">
+                        <div class="card-title" style="justify-content:center;">🏢 HR Command Center</div>
+                        <div class="card-desc">Open `/hr/dashboard`</div>
+                    </a>
+                    <a href="http://localhost:8069/web/login" target="_blank" class="card-box" style="text-decoration:none; text-align:center;">
+                        <div class="card-title" style="justify-content:center;">🔐 Login Portal</div>
+                        <div class="card-desc">Open `/web/login`</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Controls -->
+    <footer>
+        <button class="btn-icon" onclick="prevSlide()">◀ Previous</button>
+        
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+
+        <span class="slide-counter" id="slide-counter">SLIDE 01 OF 13</span>
+
+        <button class="btn-icon" onclick="nextSlide()" style="background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan)); border:none;">
+            Next Slide ▶
+        </button>
+    </footer>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 13;
+
+        function showSlide(index) {
+            if (index < 1) index = 1;
+            if (index > totalSlides) index = totalSlides;
+            currentSlide = index;
+
+            document.querySelectorAll('.slide').forEach((slide, idx) => {
+                if (idx + 1 === currentSlide) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            // Update Progress Bar & Counter
+            const percentage = (currentSlide / totalSlides) * 100;
+            document.getElementById('progress-bar').style.width = percentage + '%';
+            document.getElementById('slide-counter').textContent = 
+                `SLIDE ${String(currentSlide).padStart(2, '0')} OF ${String(totalSlides).padStart(2, '0')}`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Keyboard Controls
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Space' || e.key === 'PageDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                prevSlide();
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            }
+        });
+    </script>
+</body>
+</html>
