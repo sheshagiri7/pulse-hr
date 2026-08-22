@@ -2361,7 +2361,7 @@
             if (q.includes('leave') || q.includes('vacation') || q.includes('pto') || q.includes('absent')) {
               aiReply = `📅 **Leave Telemetry Summary:**\n• **Paid Leave Balance**: 16 Days remaining for this cycle.\n• **YTD Taken**: 2 Days (1 Medical, 1 Casual).\n• **Pending Requests**: 1 active clearance awaiting Dr. Sarah Chen's approval.\n• **Blackout Notice**: Sep 01–10 orbital transit window requires 5-day prior submission.`;
             } else if (q.includes('salary') || q.includes('payroll') || q.includes('pay') || q.includes('money') || q.includes('bonus') || q.includes('allowance')) {
-              aiReply = `💰 **Compensation Structure for ${profileData.name}:**\n• **Annual CTC**: ${profileData.annualCtc}\n• **Monthly Base**: ${profileData.monthlyBase}\n• **Shift Surge Allowance**: ${profileData.shiftAllowance} (Active Tier 1)\n• **Next Payday**: Sep 01, 2026 (In 10 Days via Standard Salary Account •••• 8492)\n• **YTD Earnings**: $118,400.00 USD (W-2 Compliant).`;
+              aiReply = `💰 **Compensation Structure for ${profileData.name}:**\n• **Annual CTC**: ${profileData.annualCtc}\n• **Monthly Base**: ${profileData.monthlyBase}\n• **Shift Surge Allowance**: ${profileData.shiftAllowance} (Active Tier 1)\n• **Next Payday**: Sep 01, 2026 (In 10 Days via Standard Salary Account •••• 8492)\n• **YTD Earnings**: ₹12,48,400.00 INR (Tax Compliant).`;
             } else if (q.includes('manager') || q.includes('hr') || q.includes('team') || q.includes('sarah')) {
               aiReply = `👥 **Hierarchy & HR Contacts:**\n• **HR Head & Lead**: **Dr. Sarah Chen** (VP Mission Operations & Head of People HR)\n• **Email**: sarah.chen@pulse.internal • 📞 +1 (555) 019-8420\n• **Office Hours**: 09:00 - 17:00 UTC (Floor 12)\n• **Direct Reports**: 14 engineers in Orbital Squad.`;
             } else if (q.includes('check') || q.includes('punch') || q.includes('duty') || q.includes('attendance') || q.includes('clock')) {
@@ -2609,9 +2609,9 @@
         if (!isOpen) return null;
 
         const payslips = [
-          { month: 'July 2026', amount: '$14,850.00', date: 'Jul 31, 2026', status: 'Disbursed', id: 'PS-2026-07' },
-          { month: 'June 2026', amount: '$14,620.00', date: 'Jun 30, 2026', status: 'Disbursed', id: 'PS-2026-06' },
-          { month: 'May 2026', amount: '$14,200.00', date: 'May 31, 2026', status: 'Disbursed', id: 'PS-2026-05' },
+          { month: 'July 2026', amount: '₹1,24,850.00', date: 'Jul 31, 2026', status: 'Disbursed', id: 'PS-2026-07' },
+          { month: 'June 2026', amount: '₹1,21,620.00', date: 'Jun 30, 2026', status: 'Disbursed', id: 'PS-2026-06' },
+          { month: 'May 2026', amount: '₹1,18,200.00', date: 'May 31, 2026', status: 'Disbursed', id: 'PS-2026-05' },
         ];
 
         return (
@@ -2652,9 +2652,9 @@
                   <div className="flex items-baseline justify-between">
                     <div>
                       <span className="text-3xl sm:text-4xl font-bold text-white tracking-tight font-sans">
-                        $14,850.00
+                        ₹1,24,850.00
                       </span>
-                      <span className="text-xs text-zinc-400 font-mono ml-2">USD / Month</span>
+                      <span className="text-xs text-zinc-400 font-mono ml-2">INR / Month</span>
                     </div>
                     <div className="text-right">
                       <span className="text-[10px] font-mono text-zinc-400">Next Disbursement</span>
@@ -2666,15 +2666,15 @@
                   <div className="grid grid-cols-3 gap-2.5 pt-2 border-t border-zinc-800/80 text-xs font-mono">
                     <div className="p-2.5 bg-zinc-900/60 rounded-xl border border-zinc-800">
                       <span className="text-[10px] text-zinc-500">Base Salary</span>
-                      <p className="text-zinc-200 font-bold mt-0.5">$11,500.00</p>
+                      <p className="text-zinc-200 font-bold mt-0.5">₹95,000.00</p>
                     </div>
                     <div className="p-2.5 bg-zinc-900/60 rounded-xl border border-zinc-800">
                       <span className="text-[10px] text-zinc-500">Shift Bonus</span>
-                      <p className="text-emerald-400 font-bold mt-0.5">+$2,100.00</p>
+                      <p className="text-emerald-400 font-bold mt-0.5">+₹18,500.00</p>
                     </div>
                     <div className="p-2.5 bg-zinc-900/60 rounded-xl border border-zinc-800">
                       <span className="text-[10px] text-zinc-500">Tier Multiplier</span>
-                      <p className="text-amber-400 font-bold mt-0.5">+$1,250.00</p>
+                      <p className="text-amber-400 font-bold mt-0.5">+₹11,350.00</p>
                     </div>
                   </div>
                 </div>
@@ -2683,7 +2683,7 @@
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
                   <div className="p-3.5 bg-zinc-900/60 rounded-xl border border-zinc-800">
                     <span className="text-[10px] text-zinc-500 uppercase tracking-wider">YTD Total Earnings (2026)</span>
-                    <p className="text-base font-bold text-white mt-1">$118,400.00 USD</p>
+                    <p className="text-base font-bold text-white mt-1">₹12,48,400.00 INR</p>
                     <span className="text-[10px] text-emerald-400">Tax Deductions: W-2 Compliant</span>
                   </div>
                   <div className="p-3.5 bg-zinc-900/60 rounded-xl border border-zinc-800">
@@ -3627,9 +3627,9 @@
           dateOfJoining: '15 Jan 2022',
           employmentType: 'Full-Time / Active Duty',
           securityClearance: 'Level 4 - Top Secret',
-          annualCtc: '$178,200.00 USD',
-          monthlyBase: '$11,500.00 USD',
-          shiftAllowance: '$2,100.00 USD',
+          annualCtc: '₹18,50,000.00 INR',
+          monthlyBase: '₹1,25,000.00 INR',
+          shiftAllowance: '₹18,500.00 INR',
           pfContribution: '8% (Employer Matched)',
           healthPlan: 'Platinum Orbital Cover Tier-1',
           avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
