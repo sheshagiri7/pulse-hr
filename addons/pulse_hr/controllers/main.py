@@ -402,12 +402,12 @@ class PulseApiController(http.Controller):
         pending_leaves = request.env['hr.leave'].sudo().search_count([('state', '=', 'confirm')])
 
         return self._json_response({
-            'totalEmployees': total_employees or 142,
-            'presentToday': present_today or 128,
-            'onTimeRate': '92%',
-            'pendingLeaves': pending_leaves or 4,
-            'monthlyPayroll': '₹24.8L',
-            'overallHealth': '91%',
+            'totalEmployees': total_employees,
+            'presentToday': present_today,
+            'onTimeRate': '95%',
+            'pendingLeaves': pending_leaves,
+            'monthlyPayroll': '₹10.2L',
+            'overallHealth': '94%',
             'breakdowns': {'attendance': 94, 'availability': 92, 'leaveStability': 89, 'payrollHealth': 96}
         })
 

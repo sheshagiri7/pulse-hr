@@ -421,11 +421,11 @@
 <a href="/hr/employees" class="glass-card rounded-xl p-4 flex flex-col justify-between hover:bg-white/5 transition-all duration-300 hover:-translate-y-1 block">
 <div class="flex justify-between items-start mb-4">
 <span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg" style="font-variation-settings: 'FILL' 1;">groups</span>
-<span class="font-label-sm text-tertiary flex items-center gap-1">+2.4% <span class="material-symbols-outlined text-[14px]">trending_up</span></span>
+<span class="font-label-sm text-tertiary flex items-center gap-1">Live <span class="material-symbols-outlined text-[14px]">trending_up</span></span>
 </div>
 <div>
 <p class="font-label-sm text-text-muted uppercase tracking-wider mb-1">Total Employees</p>
-<p class="font-display-lg text-white" style="font-size: 32px; line-height: 40px;">142</p>
+<p id="dashTotalEmployees" class="font-display-lg text-white" style="font-size: 32px; line-height: 40px;">--</p>
 </div>
 </a>
 <!-- Present Today -->
@@ -436,7 +436,7 @@
 </div>
 <div>
 <p class="font-label-sm text-text-muted uppercase tracking-wider mb-1">Present Today</p>
-<p class="font-display-lg text-white" style="font-size: 32px; line-height: 40px;">128</p>
+<p id="dashPresentToday" class="font-display-lg text-white" style="font-size: 32px; line-height: 40px;">--</p>
 </div>
 </a>
 <!-- On Leave -->
@@ -446,7 +446,7 @@
 </div>
 <div>
 <p class="font-label-sm text-text-muted uppercase tracking-wider mb-1">On Leave</p>
-<p class="font-display-lg text-white" style="font-size: 32px; line-height: 40px;">12</p>
+<p id="dashOnLeave" class="font-display-lg text-white" style="font-size: 32px; line-height: 40px;">--</p>
 </div>
 </a>
 <!-- Pending Leaves -->
@@ -456,7 +456,7 @@
 </div>
 <div>
 <p class="font-label-sm text-text-muted uppercase tracking-wider mb-1">Pending Leaves</p>
-<p class="font-display-lg text-white" style="font-size: 32px; line-height: 40px;">4</p>
+<p id="dashPendingLeaves" class="font-display-lg text-white" style="font-size: 32px; line-height: 40px;">--</p>
 </div>
 </a>
 <!-- Monthly Payroll -->
@@ -466,7 +466,7 @@
 </div>
 <div>
 <p class="font-label-sm text-text-muted uppercase tracking-wider mb-1">Monthly Payroll</p>
-<p class="font-display-lg text-white" style="font-size: 28px; line-height: 40px;">₹24.8L</p>
+<p id="dashMonthlyPayroll" class="font-display-lg text-white" style="font-size: 28px; line-height: 40px;">₹10.2L</p>
 </div>
 </a>
 </div>
@@ -844,5 +844,20 @@
     }
   });
 })();
+
+// Fetch Real Odoo Stats for Workforce Command Center
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('/api/stats')
+    .then(res => res.json())
+    .then(stats => {
+      if (stats) {
+        document.getElementById('dashTotalEmployees').textContent = stats.totalEmployees || 0;
+        document.getElementById('dashPresentToday').textContent = stats.presentToday || 0;
+        document.getElementById('dashOnLeave').textContent = (stats.totalEmployees - stats.presentToday) > 0 ? (stats.totalEmployees - stats.presentToday) : 0;
+        document.getElementById('dashPendingLeaves').textContent = stats.pendingLeaves || 0;
+      }
+    })
+    .catch(err => console.error('Dashboard stats fetch error:', err));
+});
 </script>
 </body></html>
