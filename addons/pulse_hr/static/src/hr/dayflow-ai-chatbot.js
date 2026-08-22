@@ -1,5 +1,5 @@
 /**
- * Dayflow AI HR Commander Chatbot Client Script
+ * Pulse AI HR Commander Chatbot Client Script
  */
 
 (function () {
@@ -12,7 +12,7 @@
   // Inject HTML Markup
   root.innerHTML = `
     <!-- Floating Trigger Button -->
-    <button id="dayflowAiTrigger" class="dayflow-ai-trigger" title="Dayflow AI HR Commander" aria-label="Dayflow AI Assistant">
+    <button id="dayflowAiTrigger" class="dayflow-ai-trigger" title="Pulse AI HR Commander" aria-label="Pulse AI Assistant">
       <div class="dayflow-ai-orb">
         <span class="material-symbols-outlined" style="font-size: 22px; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; text-align: center; margin: 0; padding: 0;">psychology</span>
       </div>
@@ -86,7 +86,7 @@
       <!-- Footer Input -->
       <div class="dayflow-ai-footer">
         <div class="dayflow-ai-input-wrap">
-          <input id="dayflowAiInput" class="dayflow-ai-input" placeholder="Ask Dayflow AI about workforce..." type="text" autocomplete="off"/>
+          <input id="dayflowAiInput" class="dayflow-ai-input" placeholder="Ask Pulse AI about workforce..." type="text" autocomplete="off"/>
         </div>
         <button id="dayflowAiSendBtn" class="dayflow-ai-send-btn" title="Send Message">
           <span class="material-symbols-outlined" style="font-size: 20px;">send</span>
@@ -246,7 +246,7 @@
 
     msgDiv.innerHTML = `
       <div class="dayflow-ai-msg-bubble">${contentHtml}</div>
-      <div class="dayflow-ai-msg-time">Dayflow AI • ${getTimeStr()}</div>
+      <div class="dayflow-ai-msg-time">Pulse AI • ${getTimeStr()}</div>
     `;
     body.appendChild(msgDiv);
     scrollToBottom();
@@ -304,7 +304,7 @@
       .catch(err => {
         removeTyping();
         addAiMessage({
-          responseText: "Dayflow AI is currently operating in offline mode. Here are quick shortcuts to review data:",
+          responseText: "Pulse AI is currently operating in offline mode. Here are quick shortcuts to review data:",
           actions: [
             { label: "View Attendance", url: "/hr/attendance", icon: "event_available" },
             { label: "Review Leave", url: "/hr/leaves", icon: "holiday_village" },

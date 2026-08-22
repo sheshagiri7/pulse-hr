@@ -111,7 +111,7 @@
         </div>
 
         <div class="dayflow-setting-group">
-          <div style="font-size: 12px; font-weight: 700; color: #8B45F7; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Dayflow AI Assistant</div>
+          <div style="font-size: 12px; font-weight: 700; color: #8B45F7; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Pulse AI Assistant</div>
           <div class="dayflow-setting-row">
             <div>
               <div class="dayflow-setting-label">Real-time Anomaly Scan</div>
